@@ -1,3 +1,5 @@
+#BSD 2-clause License#
+
 Copyright (c) 2013, Spacecow Gaming  
 All rights reserved.
 
