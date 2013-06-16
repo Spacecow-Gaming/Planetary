@@ -1,6 +1,9 @@
+# Java ignores
 *.class
-
-# Package Files #
 *.jar
 *.war
 *.ear
+
+# Haskell ignores
+*.o
+*.hi
