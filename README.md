@@ -1,7 +1,7 @@
 Planetary
 =========
 
-Planetary was originally a board game, but isn't any more.
+Planetary was originally a board game, but isn't any more!
 
 Short term goals of this project:
 * Text-based game engine
