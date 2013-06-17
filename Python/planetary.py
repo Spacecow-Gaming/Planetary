@@ -76,19 +76,20 @@ def start():
     player1 = Player((0, 0))
     clear = "\n" * 1000
     output = ""
-    bar = "=" * 70
+    line = "=" * 70
     while True:
-        print (clear)
-        print (generatemap(starsystem))
-        print (output)
-        print (bar)
+        sys.stdout.write(clear 
+                + generatemap(starsystem) 
+                + output 
+                + line 
+                + "\n")
         print ("INFO: You are in sector:\t", 
                 player1.position )
         print ("INFO: Sector description:\t", 
                 starsystem[player1.position].getdesc())
         print ("INFO: Things in sector:\t\t", 
                 starsystem[player1.position].getobj())
-        action = input (bar +
+        action = input (line +
                         "\n"
                         "Enter action:")
         if action == "help":
