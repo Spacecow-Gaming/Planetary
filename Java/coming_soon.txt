@@ -1,0 +1,3 @@
+-User will be able to enter his commands in any case, not just lower case
+
+-Actual things will happen after user has entered his choice, ie "Mine"
