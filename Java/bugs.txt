@@ -1,0 +1,5 @@
+-Does not allow names with more than one word, well it does, but it then takes that as the input for the next question, odd
+
+-Typos
+
+-I am struggling to get Thread.sleep to work, so I have left out a pause function although one will probably be incorporated later
