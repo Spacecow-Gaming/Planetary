@@ -2,6 +2,7 @@
 # Copyright (c) 2013 Spacecow Gaming
 "Planetary, the game. Needs no more explanation"
 import sys
+import random
 from os import name
 from subprocess import call
 
@@ -33,11 +34,15 @@ class Sector:
     # it being a string, not something nicer
     description = ""
     objects = []
-    def __init__(self, indesc):
+    def __init__(self, indesc, inobj):
         self.description = indesc
+        self.objects = inobj
+
     def getdesc(self):
         "Returns description"
         return self.description
+    def setdesc(self, newdesc):
+        description = newdesc
     def getobj(self):
         "Returns a list of things in sector"
         return self.objects
@@ -48,7 +53,6 @@ class Sector:
             objstr += obj 
             objstr += "\n\t\t"
         return objstr
-        
     def setobj(self, newobj):
         "Modifies list of things in sector"
         self.objects = newobj
@@ -75,7 +79,11 @@ class Board:
     def __init__(self):
         for xpos in range(11):
             for ypos in range(11):
-                self.starsys[(xpos, ypos)] = Sector("There are stars here, surprisingly")
+                if random.random() < 0.3:
+                    self.starsys[(xpos, ypos)] = Sector("Thick asteroid field", ["Asteroids"])
+                else:
+                    self.starsys[(xpos, ypos)] = Sector("Nothing here", ["Gas and dust"])
+
     def getstarsys(self):
         return self.starsys
     def getsect(self, coords):
@@ -86,9 +94,13 @@ def generatemap(starsys):
     mapstr = ""
     for xpos in range(11):
         for ypos in range(11):
-            cursector = starsys[(xpos, ypos)]
-            if "You are here" in cursector.getobj():
+            cursect = starsys[(xpos, ypos)]
+            if "You are here" in cursect.getobj():
                 mapstr += "P"
+            elif "Planet" in cursect.getobj():
+                mapstr += "O"
+            elif "Asteroids" in cursect.getobj():
+                mapstr += "A"
             else:
                 mapstr += "*"
         mapstr += "\n"
@@ -102,8 +114,6 @@ def start():
 HELP: The "P" on the map represents your position\n"""
     line = "=" * 70
     while True:
-        for pos, sect in starsys.getstarsys().items():
-            sect.setobj([])
         cursect = starsys.getsect(player1.getpos())
         cursect.setobj(["You are here"])
         if name == "posix":
@@ -112,6 +122,7 @@ HELP: The "P" on the map represents your position\n"""
             call(["cls"])
         else:
             print("You're using an OS I can't be bothered to support.\n"
+                  "Your screen cannot be cleared. Instead...\n"  
                   "Enjoy this cat chasing a mouse\n\n"
                   "               )\._.,--....,'``.      \n"
                   " .b--.        /;   _.. \   _\  (`._ ,.\n"
@@ -124,9 +135,9 @@ HELP: The "P" on the map represents your position\n"""
         print ("INFO: You are in sector:\t", 
                 player1.getpos() )
         print ("INFO: Sector description:\t", 
-                starsys.getsect(player1.getpos()).getdesc())
+                cursect.getdesc())
         print ("INFO: Things in sector:\t\t", 
-                starsys.getsect(player1.getpos()).getobjstr())
+                cursect.getobjstr())
 
         rawact = input (line +
                         "\n"
@@ -155,6 +166,13 @@ HELP: exit - exits program\n"""
             return False
         elif action[0] == "exit":
             sys.exit()
+        elif action[0] == "print":
+            output = ""
+            for k, val in starsys.getstarsys().items():
+                output += str(k)
+                output += str(val.getobj())
+                output += "\n"
+
         else:
             output = "\nERROR: Not a valid action.\n"
 mainmenu()
