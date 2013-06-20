@@ -27,48 +27,65 @@ def mainmenu():
 
 class Sector:
     "Base unit of board" 
+    # The description doesn't actually do anything, hence
+    # it being a string, not something nicer
     description = ""
-    objects = "Some hydrogen atoms"
+    objects = []
     def __init__(self, indesc):
         self.description = indesc
     def getdesc(self):
         "Returns description"
         return self.description
     def getobj(self):
-        "Will return a list of things in sector, for now, a string"
+        "Returns a list of things in sector"
         return self.objects
+    def getobjstr(self):
+        "Turns list into string, then returns"
+        objstr = ""
+        for obj in self.objects:
+            objstr += obj 
+            objstr += "\n\t\t"
+        return objstr
+        
     def setobj(self, newobj):
-        "Will modify list of things in sector, for now, takes a string"
+        "Modifies list of things in sector"
         self.objects = newobj
-    # Other things will be added here e.g. planets, other players
 
-class Player:
-    "The player's spaceship"
-    position = (0, 0)
+class Matter:
+    "Catch-all object"
+    position = (0,0)
     def __init__(self, inpos):
         self.position = inpos
     def getpos(self):
-        "Returns player position tuple"
+        "Returns position tuple"
         return self.position
     def setpos(self, newpos):
-        "Sets player position, takes a tuple"
+        "Sets position, takes a tuple"
         self.position = newpos
 
-def generateboard():
-    "Returns a dictionary of Sectors with their coordinates as the key"
-    board = {}
-    for xpos in range(11):
-        for ypos in range(11):
-            board[(xpos, ypos)] = Sector("There are stars here, surprisingly")
-    return board
+class Ship(Matter):
+    "A spaceship"
+    # Ship specific methods will come eventually...
+
+class Board:
+    "Essentially a container for a data structure of sectors"
+    starsys = {}
+    def __init__(self):
+        for xpos in range(11):
+            for ypos in range(11):
+                self.starsys[(xpos, ypos)] = Sector("There are stars here, surprisingly")
+    def getstarsys(self):
+        return self.starsys
+    def getsect(self, coords):
+        return self.starsys[coords]
 
 def generatemap(starsys):
     "Will turn the starsystem dictionary into a nice string"
     mapstr = ""
     for xpos in range(11):
         for ypos in range(11):
-            cursector = starsys[(xpos,ypos)]
-            if cursector.getobj() == "You are here":
+            cursector = starsys[(xpos, ypos)]
+            if "You are here" in cursector.getobj():
                 mapstr += "P"
             else:
                 mapstr += "*"
@@ -77,43 +94,57 @@ def generatemap(starsys):
 
 def start():
     "Starts the game, returns to menu on return"
-    starsystem = generateboard()
-    player1 = Player((0, 0))
+    starsys = Board()
+    player1 = Ship((0, 0))
     clear = "\n" * 1000
     output = """\nHELP: Type help for a list of commands
 HELP: The "P" on the map represents your position\n"""
     line = "=" * 70
     while True:
-        starsystem[player1.getpos()].setobj("You are here")
+        for pos, sect in starsys.getstarsys().items():
+            sect.setobj([])
+        cursect = starsys.getsect(player1.getpos())
+        cursect.setobj(["You are here"])
         sys.stdout.write(clear 
-                + generatemap(starsystem) 
+                + generatemap(starsys.getstarsys()) 
                 + line
                 + output 
                 + line 
                 + "\n")
         print ("INFO: You are in sector:\t", 
-                player1.position )
+                player1.getpos() )
         print ("INFO: Sector description:\t", 
-                starsystem[player1.position].getdesc())
+                starsys.getsect(player1.getpos()).getdesc())
         print ("INFO: Things in sector:\t\t", 
-                starsystem[player1.position].getobj())
-        action = input (line +
+                starsys.getsect(player1.getpos()).getobjstr())
+
+        rawact = input (line +
                         "\n"
                         # This is short for prompt, because 4 letters
                         "PRMT: ")
-        # This is really, really ugly. I mean /really/.
-        if action == "help":
+        # This is really, really ugly. I mean /really/. Referring
+        # to the shitty indentation
+        if rawact == "":
+            action = ["help"]
+        else:
+            action = rawact.split()
+
+        if action[0] == "help":
             output = """\nHELP: help - prints this output
-HELP: move x y - moves to sector
+HELP: move x y - moves to sector (x,y)
 HELP: mine - mines at current sector
 HELP: scan - scans with range 1
 HELP: build - coming soon
 HELP: abandon - abandons current game
 HELP: exit - exits program\n"""
-        elif action == "abandon":
+        elif action[0] == "move":
+            newx = int(action[1])
+            newy = int(action[2])
+            player1.setpos((newx, newy))
+        elif action[0] == "abandon":
             return False
-        elif action == "exit":
+        elif action[0] == "exit":
             sys.exit()
         else:
-            output = "ERROR: Not a valid action.\n"
+            output = "\nERROR: Not a valid action.\n"
 mainmenu()
