@@ -23,6 +23,7 @@ def mainmenu():
     elif action == 2:
         print ("There is no save game function")
     elif action == 3:
+        print ("Exiting game...")
         sys.exit()
     else:
         print ("That is not an option, try again")
@@ -39,9 +40,10 @@ class Sector:
         self.objects = inobj
 
     def getdesc(self):
-        "Returns description"
+        "Returns description string"
         return self.description
     def setdesc(self, newdesc):
+        "Sets description string"
         description = newdesc
     def getobj(self):
         "Returns a list of things in sector"
@@ -62,7 +64,7 @@ class Sector:
 
 class Matter:
     "Catch-all object"
-    position = (0,0)
+    position = (0, 0)
     def __init__(self, inpos):
         self.position = inpos
     def getpos(self):
@@ -79,17 +81,20 @@ class Ship(Matter):
 class Board:
     "Essentially a container for a data structure of sectors"
     starsys = {}
+    # Objects and their relative probabilities of occurring
+    objprobs = { "Planet":1, "Asteroids":10, "Gas and dust":100 }
     def __init__(self):
         for xpos in range(11):
             for ypos in range(11):
-                if random.random() < 0.3:
-                    self.starsys[(xpos, ypos)] = Sector("Thick asteroid field", ["Asteroids"])
-                else:
-                    self.starsys[(xpos, ypos)] = Sector("Nothing here", ["Gas and dust"])
+                newsect = Sector("Nothing of note", ["Gas and dust"])
+                newsect.addobj(weightedchoice(self.objprobs))
+                self.starsys[(xpos, ypos)] = newsect
 
     def getstarsys(self):
+        "Returns starsys dictionary"
         return self.starsys
     def getsect(self, coords):
+        "Returns sector object"
         return self.starsys[coords]
 
 def generatemap(starsys):
@@ -109,6 +114,11 @@ def generatemap(starsys):
         mapstr += "\n"
     return mapstr
 
+def weightedchoice(choiceprobs):
+    "Takes a dictionary of choices and probabilities, returns a choice"
+    weightedlist = [x for choice, prob in choiceprobs.items() for x in [choice]*prob ]
+    return random.choice(weightedlist)
+
 def start():
     "Starts the game, returns to menu on return"
     starsys = Board()
@@ -116,7 +126,7 @@ def start():
     output = """\nHELP: Type help for a list of commands
 HELP: The "P" on the map represents your position\n"""
     line = "=" * 70
-    prevsect = starsys.getsect((0,0))
+    prevsect = starsys.getsect((10, 10))
     while True:
         cursect = starsys.getsect(player1.getpos())
         cursect.addobj("You are here")
@@ -163,7 +173,7 @@ HELP: scan - scans with range 1
 HELP: build - coming soon
 HELP: abandon - abandons current game
 HELP: exit - exits program\n"""
-        elif action[0] == "move":
+        elif action[0] == "move" :
             newx = int(action[1])
             newy = int(action[2])
             player1.setpos((newx, newy))
@@ -173,8 +183,8 @@ HELP: exit - exits program\n"""
             sys.exit()
         elif action[0] == "print":
             output = ""
-            for k, val in starsys.getstarsys().items():
-                output += str(k)
+            for key, val in starsys.getstarsys().items():
+                output += str(key)
                 output += str(val.getobj())
                 output += "\n"
 
