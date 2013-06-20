@@ -4,6 +4,7 @@ public class explore{
 
 	sector Sector = new sector();
 	Scanner scan = new Scanner(System.in);
+	game game = new game();
 	String whereToGo;
 	
 	public void exploreChoice(){
@@ -18,7 +19,7 @@ public class explore{
 		if(whereToGo.equals("move")){
 			Sector.sectorX = 2;
 			Sector.sectorY = 2;
-			exploreChoice();
+			game.choice();
 		}else{
 			System.exit(0);
 		}
