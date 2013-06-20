@@ -2,9 +2,13 @@ import java.util.Scanner;
 
 public class game{
 	
-	String playerName;
-	String shipName;
 	String moveChoice;
+	String helptext = "Official Starship Manual Vol I\n"
+                                + "mine - do some mining\n"
+                                + "explore - find exciting things\n"
+                                + "build - make a space castle\n"
+                                + "shop - buy things\n"
+                                + "help - look at this text\n";
 	int tut = 0;
 	Scanner scan = new Scanner(System.in);
 	build build = new build();
@@ -16,27 +20,15 @@ public class game{
 	
 	public void startGame(){
 		
-		System.out.println("Aha, Captain, you have arrived. Your starship awaits. Not long until departure, Captain, errr...");
-		System.out.println("Sorry, what was your name again? ");
-		
-		
-		playerName = scan.next();
-		
-		System.out.println("Ahhh, that's right, now I remember, your Captain " + playerName);
-		System.out.println("And what was the name of your ship? ");
-		
-		shipName = scan.next();
-		
-		System.out.println("I am so excited to travel with you Captain " + playerName + " on board the " + shipName);
-		System.out.println("----------------------");
-		
 		System.out.println("Anti-lock is set to 70%");
 		System.out.println("Engines at 56%");
 		System.out.println("Core at 34%");
 		System.out.println("(rumble rumble)");
 		System.out.println("Wow, we are in space!");
 		
-		System.out.println("Lieutenant Jones: Captain our engine co-ordinaters are online, we have full control of the ship, what shall we do?");
+		System.out.println("============================================");
+		
+		System.out.println("Captain our engine co-ordinaters are online, we have full control of the ship, what shall we do?");
 		
 		if(tut == 0){
 				System.out.println("You can go to mine, explore, build, shop, or type help.");
@@ -51,12 +43,6 @@ public class game{
 		System.out.println("What would you like to do Captain?");
 		
 		moveChoice = scan.next();
-                String helptext = "Official Starship Manual Vol I\n"
-                                + "mine - do some mining\n"
-                                + "explore - find exciting things\n"
-                                + "build - make a space castle\n"
-                                + "shop - buy things\n"
-                                + "help - look at this text\n";
 		
 		if(moveChoice.equals("mine")){
 			mine.mine();
