@@ -39,7 +39,7 @@ public class game{
 		System.out.println("Lieutenant Jones: Captain our engine co-ordinaters are online, we have full control of the ship, what shall we do?");
 		
 		if(tut == 0){
-				System.out.println("You can go to mine, explore, build or shop");
+				System.out.println("You can go to mine, explore, build, shop, or type help.");
 				tut = 1;
 				choice();
 		}else{
@@ -51,6 +51,12 @@ public class game{
 		System.out.println("What would you like to do Captain?");
 		
 		moveChoice = scan.next();
+                String helptext = "Official Starship Manual Vol I\n"
+                                + "mine - do some mining\n"
+                                + "explore - find exciting things\n"
+                                + "build - make a space castle\n"
+                                + "shop - buy things\n"
+                                + "help - look at this text\n";
 		
 		if(moveChoice.equals("mine")){
 			mine.mine();
@@ -60,6 +66,9 @@ public class game{
 			build.build();
 		}else if(moveChoice.equals("shop")){
 			shop.shop();
+		}else if(moveChoice.equals("help")){
+			System.out.println(helptext);
+                        choice();
 		}else{
 			System.out.println("Sorry Captain, did you want to mine, explore, build or shop?");
 			choice();
