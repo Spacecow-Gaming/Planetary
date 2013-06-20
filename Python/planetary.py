@@ -2,6 +2,8 @@
 # Copyright (c) 2013 Spacecow Gaming
 "Planetary, the game. Needs no more explanation"
 import sys
+from os import name
+from subprocess import call
 
 def mainmenu():
     "Simple main menu function"
@@ -96,7 +98,6 @@ def start():
     "Starts the game, returns to menu on return"
     starsys = Board()
     player1 = Ship((0, 0))
-    clear = "\n" * 1000
     output = """\nHELP: Type help for a list of commands
 HELP: The "P" on the map represents your position\n"""
     line = "=" * 70
@@ -105,8 +106,17 @@ HELP: The "P" on the map represents your position\n"""
             sect.setobj([])
         cursect = starsys.getsect(player1.getpos())
         cursect.setobj(["You are here"])
-        sys.stdout.write(clear 
-                + generatemap(starsys.getstarsys()) 
+        if name == "posix":
+            call(["clear"])
+        elif name == "nt":
+            call(["cls"])
+        else:
+            print("You're using an OS I can't be bothered to support.\n"
+                  "Enjoy this cat chasing a mouse\n\n"
+                  "               )\._.,--....,'``.      \n"
+                  " .b--.        /;   _.. \   _\  (`._ ,.\n"
+                  "`=,-,-'~~~   `----(,_..'--(,_..'`-.;.'\n")
+        sys.stdout.write(generatemap(starsys.getstarsys()) 
                 + line
                 + output 
                 + line 
