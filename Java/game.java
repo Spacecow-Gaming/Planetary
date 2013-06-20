@@ -2,10 +2,10 @@ import java.util.Scanner;
 
 public class game{
 	
-	public String playerName;
-	public String shipName;
-	public String moveChoice;
-	public int tut = 0;
+	String playerName;
+	String shipName;
+	String moveChoice;
+	int tut = 0;
 	Scanner scan = new Scanner(System.in);
 	build build = new build();
 	explore explore = new explore();
@@ -55,7 +55,7 @@ public class game{
 		if(moveChoice.equals("mine")){
 			mine.mine();
 		}else if(moveChoice.equals("explore")){
-			explore.explore();
+			explore.exploreChoice();
 		}else if(moveChoice.equals("build")){
 			build.build();
 		}else if(moveChoice.equals("shop")){
