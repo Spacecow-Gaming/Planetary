@@ -9,7 +9,9 @@ public class game{
                                 + "build - make a space castle\n"
                                 + "shop - buy things\n"
                                 + "help - look at this text\n";
+								
 	int tut = 0;
+	
 	Scanner scan = new Scanner(System.in);
 	build build = new build();
 	explore explore = new explore();
@@ -40,6 +42,8 @@ public class game{
 	}
 	
 	public void choice(){
+		
+		System.out.println("You are currently on the bridge");
 		System.out.println("What would you like to do Captain?");
 		
 		moveChoice = scan.next();
@@ -48,20 +52,17 @@ public class game{
 			mine.mine();
 		}else if(moveChoice.equals("explore")){
 			explore.exploreChoice();
+			choice();
 		}else if(moveChoice.equals("build")){
 			build.build();
 		}else if(moveChoice.equals("shop")){
 			shop.shop();
 		}else if(moveChoice.equals("help")){
 			System.out.println(helptext);
-                        choice();
+            choice();
 		}else{
 			System.out.println("Sorry Captain, did you want to mine, explore, build or shop?");
 			choice();
 		}
 	}
-	
-	
-	
-
 }
