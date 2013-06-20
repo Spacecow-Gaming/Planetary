@@ -10,21 +10,22 @@ public class explore{
 		
 		System.out.println("============================================================================");
 		System.out.println("Postion: " + Sector.getPos());
-		System.out.println(Sector.getDesc());
+		System.out.println("Description: " + Sector.getDesc());
+		System.out.println();
 		System.out.println("What would you like to do?");
 		
 		whereToGo = scan.next();
 		
 		if(whereToGo.equals("move")){
-			Sector.sectorX = 2;
-			Sector.sectorY = 2;
-                        return;
+			Sector.sectorX += 1;
+			Sector.sectorY += 1;
+            exploreChoice();
+		}else if(whereToGo.equals("bridge")){
+			System.out.println("======================================================");
+			return;
 		}else{
-			System.exit(0);
+			System.out.println("Sorry, you can either return to the bridge or move");
+			exploreChoice();
 		}
 	}
-	
-	
-	
-
 }
