@@ -51,11 +51,14 @@ class Sector:
         objstr = ""
         for obj in self.objects:
             objstr += obj 
-            objstr += "\n\t\t"
+            objstr += "\n\t\t\t\t "
         return objstr
     def setobj(self, newobj):
         "Modifies list of things in sector"
         self.objects = newobj
+    def addobj(self, newobj):
+        "Adds object to list"
+        self.objects.append(newobj)
 
 class Matter:
     "Catch-all object"
@@ -113,9 +116,11 @@ def start():
     output = """\nHELP: Type help for a list of commands
 HELP: The "P" on the map represents your position\n"""
     line = "=" * 70
+    prevsect = starsys.getsect((0,0))
     while True:
         cursect = starsys.getsect(player1.getpos())
-        cursect.setobj(["You are here"])
+        cursect.addobj("You are here")
+        prevsect.getobj().pop()
         if name == "posix":
             call(["clear"])
         elif name == "nt":
@@ -175,4 +180,5 @@ HELP: exit - exits program\n"""
 
         else:
             output = "\nERROR: Not a valid action.\n"
+        prevsect = cursect
 mainmenu()
