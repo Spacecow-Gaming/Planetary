@@ -41,15 +41,17 @@ def mainmenu():
                                                    __/ |
            A game of some sort, I believe         |___/ \n""")
     print ("\t\t(1) Start Game\n\t\t(2) Continue Game\n\t\t(3) Exit")
-    action = int(input("\nSELECT: "))
+    action = int(input("\n> "))
     if action == 1:
         clear()
-        print (line("-INFORMATION-") + "INFO: Your journey into the cosmos is beginning.\n"
+        sys.stdout.write (line("-INFORMATION-") + "INFO: Your journey into the cosmos is beginning.\n"
                 "INFO: You think you are high. Is any of this real?\n"
                 "INFO: The only way to find out is to engage your inner\n" 
-                "INFO: demons in space combat!\n" + line("-INPUT PROMPT-"))
+                "INFO: demons in space combat!\n" 
+                "INFO: Press Enter to continue...\n"
+                + line("-INPUT PROMPT-"))
         # Short for "prompt", if you were wondering
-        input("PRMT: Press any key to continue\n")
+        input("> ")
         start()
     elif action == 2:
         print ("There is no save game function")
@@ -148,6 +150,7 @@ class Ship(Matter):
     output = ""
     # Will implement these methods eventually
     def mine(self, target):
+        self.output = ""
         "Mine some matter for resources"
         # The 's' and 't' prefixes mean self and target 
         for tres, tamt in target.getres().items():
@@ -158,7 +161,6 @@ class Ship(Matter):
                 snewres = self.getres()
                 snewres[sres] += tamt
                 self.setres(snewres)
-        self.output = ""
         self.output = "INFO: Mined " 
         self.output += target.getshortdesc().lower()
         self.output += "\nINFO: Inventory now contains:"
@@ -169,7 +171,16 @@ class Ship(Matter):
             self.output += "\n"
     def attack(self, target):
         "Deal damage to some matter"
-        output = "\nINFO: Attacked something"
+        self.output = "\nINFO: Attacked something"
+
+    def viewinv(self):
+        "Shows resources on player"
+        self.output = "INFO: Inventory contains:"
+        for res, amt in self.getres().items():
+            self.output += "\nINFO: "
+            self.output += str(amt) + " tonnes of "
+            self.output += str(res).lower()
+            self.output += "\n"
 
     def talk(self, target, mood):
         "Say something in in a mood to a ship/planet"
@@ -181,6 +192,7 @@ class Ship(Matter):
 
     def scan(self, target):
         "Scan some matter, returning a detailed string"
+        self.output = target.getdesc()
 
     def getpos(self):
         return self.position
@@ -290,7 +302,8 @@ def handleaction(action, gamestate):
     if action[0] == "help" and len(action) == 1:
         output = """\nHELP: help - prints this output
 HELP: move x y - moves to sector (x,y)
-HELP: mine - coming soon
+HELP: mine - mines object at current sector
+HELP: view inv - views current inventory
 HELP: scan - coming soon
 HELP: build - coming soon
 HELP: talk - coming soon
@@ -312,6 +325,8 @@ HELP: help list - a list of help topics\n"""
             output = "ERROR: Out of bounds movement index\n"
     elif action[0] == "mine":
         player1.mine(starsys.getsect(player1.getpos()).getobj()[0])
+    elif action[0] == "view" and action[1] == "inv":
+        player1.viewinv()
     # Causes a return to the main menu
     elif action[0] == "abandon":
         output = "terminate"
@@ -389,9 +404,7 @@ HELP: The "@" on the map represents your position\n"""
         print ("INFO: Things in sector:\t\t", 
                 cursect.getobjstr(True))
         rawact = input (line("-INPUT PROMPT-") +
-                    "\n"
-                    # This is short for prompt, because 4 letters
-                    "PRMT: ")
+                    "> ")
         if len(rawact) == 0:
             action = ["help"]
         else:
