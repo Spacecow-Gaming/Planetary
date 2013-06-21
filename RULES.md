@@ -24,10 +24,10 @@ Each can be moved in any order. Can move one space, perform an action, then move
 * Scout- can move 5 spaces per turn, and can attack in straight lines with laser gun for 1 damage from up to 10 spaces away. Has 2 health max.
 * Healer- can move 4 spaces per turn, cannot attack other units at all. Has 3 health max. Can heal other units of the same team for 1 health per turn when in an adjacent space.
 
-#Blueprints# 
+#Blueprints#
 A player can have up to 5 blueprints on their bar. Blueprints from the chosen deck enter the bar randomly at a rate of one per turn. A blueprint can be sacrificed for materials, sending it back into the deck until a later stage, or sacrificed for another blueprint. Only one sacrifice can be made per turn. Using a blueprint costs Iron, Copper and between 50W and 100W. Blueprints can be dragged and dropped to make a new module for the ship.
 
-#Planets# 
+#Planets#
 Planets are small sub-boards that range from having a circumference between 16 spaces and 48 spaces, in multiples of 8. There are segments on the planet that can be mined using unit structures; these structures provide materials directly to the player’s inventory until destroyed or claimed by another team. There are multiple types of planet space-
 * Woodland- can be cut down by a unit for 3 hydrocarbon fuel, but takes 2 actions to cut down and becomes grassy plains.
 * Plants- can be picked up by a unit for 1 hydrocarbon fuel, taking 1 action and becoming grassy plains.
