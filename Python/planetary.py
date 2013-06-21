@@ -179,8 +179,7 @@ class Ship(Matter):
         for res, amt in self.getres().items():
             self.output += "\nINFO: "
             self.output += str(amt) + " tonnes of "
-            self.output += str(res).lower()
-            self.output += "\n"
+            self.output += str(res).lower() + "\n"
 
     def talk(self, target, mood):
         "Say something in in a mood to a ship/planet"
@@ -192,7 +191,13 @@ class Ship(Matter):
 
     def scan(self, target):
         "Scan some matter, returning a detailed string"
-        self.output = target.getdesc()
+        self.output = "INFO: "+ target.getdesc() + "\n"
+
+    def getout(self):
+        return self.output
+
+    def setout(self, newout):
+        self.output = newout
 
     def getpos(self):
         return self.position
@@ -202,6 +207,9 @@ class Ship(Matter):
 
 class Planet(Matter):
     "Planets have populations, atmospheres etc which matter does not"
+    # Will implement later. Things to do:
+    # 1. Traders units and their inventories
+    # 2. Planet subsectors, for landing and exploring
 
 class Board:
     "Essentially a container for a data structure of sectors"
@@ -212,15 +220,27 @@ class Board:
     # Generic objects
     planet, asteroid, nothing = Planet(), Matter(), Matter()
     planet.setshortdesc("Planet")
+    planet.setdesc("A standard planet, with abundant rock resources")
     asteroid.setshortdesc("Asteroid")
+    asteroid.setdesc("A standard asteroid, which is actually made of rocks")
     nothing.setshortdesc("Gas and dust")
+    nothing.setdesc("Slightly more detailed gas and dust")
 
     # Special, rarer ones
     pcolony, acolony, ruins, hulk = Planet(), Matter(), Matter(), Matter()
     pcolony.setshortdesc("Planetary colony")
+    pcolony.setdesc("A small settlement with a population of a few thousand\n"
+            "INFO: Perhaps they have good to trade. "
+            "There is only one way to find out.\n"
+            "INFO: Recommended course of action: open hailing frequencies")
     acolony.setshortdesc("Asteroid colony")
+    acolony.setdesc("A former mining outpost turned settlement. The ground is rich with rocks\n")
     ruins.setshortdesc("Abandoned alien colony")
+    ruins.setdesc("Aliens used to be here, but aren't any more.\n"
+            "INFO: The scanners cannot penetrate the walls of the ruins.\n"
+            "INFO: The only way to ascertain whether there's any technology is to land")
     hulk.setshortdesc("Abandoned ship hulk")
+    hulk.setdesc("The scanners cannot penetrate the hulk's hull")
 
     # List of objects and their relative probabilities of occurring
     objprobs = { planet:10, asteroid:30, nothing:300,
@@ -320,6 +340,7 @@ HELP: help list - a list of help topics\n"""
         newx = int(action[2])
         if newx < 11 and newy < 11:
             player1.setpos((newx, newy))
+            player1.setout("")
             output = "INFO: Player has moved\n"
         else:
             output = "ERROR: Out of bounds movement index\n"
@@ -327,6 +348,8 @@ HELP: help list - a list of help topics\n"""
         player1.mine(starsys.getsect(player1.getpos()).getobj()[0])
     elif action[0] == "view" and action[1] == "inv":
         player1.viewinv()
+    elif action[0] == "scan":
+        player1.scan(starsys.getsect(player1.getpos()).getobj()[0])
     # Causes a return to the main menu
     elif action[0] == "abandon":
         output = "terminate"
@@ -394,7 +417,7 @@ HELP: The "@" on the map represents your position\n"""
                     line("-MAP-")
                     + generatemap(starsys.getstarsys()) 
                     + line("-OUTPUT-")
-                    + player1.output
+                    + player1.getout()
                     + output 
                     + line("-INFORMATION-"))
         print ("INFO: You are in sector:\t", 
