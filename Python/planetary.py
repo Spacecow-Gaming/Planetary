@@ -7,6 +7,7 @@ from os import name
 from subprocess import call
 
 def line(header):
+    "Returns nicely formatted header with '=' line"
     output = "="
     output += header
     output += "="*(69-len(header))
@@ -52,15 +53,14 @@ def mainmenu():
 
 class Sector:
     "Base unit of board" 
-    # The description doesn't actually do anything, hence
-    # it being a string, not something nicer
     description = ""
     objects = []
 
     def __init__(self, indesc, inobj):
         self.description = indesc
         self.objects = inobj
-
+    # This is shown every tick to the user - make it concise, 
+    # no more than 1 line
     def getdesc(self):
         "Returns description string"
         return self.description
@@ -73,14 +73,16 @@ class Sector:
         "Returns a list of things in sector"
         return self.objects
 
-    def getobjstr(self):
+    def getobjstr(self, formatted):
         "Turns list into string, then returns"
         objstr = ""
+
         for obj in self.objects:
-            objstr += obj 
-            objstr += "\n\t\t\t\t "
+            objstr += obj.getshortdesc() 
+            if formatted:
+                objstr += "\n\t\t\t\t "
         # Since I'm new to Python, there might be a more pythonic
-        # way to do this which I don't know about
+        # way to do str manipulation which I don't know about
         tmplist = list(objstr)
         tmplist = tmplist[:-6]
         objstr = "".join(tmplist)
@@ -89,29 +91,77 @@ class Sector:
     def setobj(self, newobj):
         "Modifies list of things in sector"
         self.objects = newobj
-
+    
+    # Used for fear of "object" becoming some other structure later on
     def addobj(self, newobj):
         "Adds object to list"
         self.objects.append(newobj)
 
 class Matter:
-    "Catch-all object"
-    position = (0, 0)
+    "Everything on the map is matter"
 
-    def __init__(self, inpos):
-        self.position = inpos
+    # What is returned when scanned
+    description = "It's made of rocks"
 
-    def getpos(self):
-        "Returns position tuple"
-        return self.position
+    shortdesc = "Asteroid"
 
-    def setpos(self, newpos):
-        "Sets position, takes a tuple"
-        self.position = newpos
+    # Resources you get when you mine it, in tons
+    resources = {"Rocks":10}
+
+    def getdesc(self):
+        "Returns string"
+        return self.description
+
+    def setdesc(self, newdesc):
+        "Takes string"
+        self.description = newdesc
+
+    def getshortdesc(self):
+        "Returns nonspecific description"
+        return self.shortdesc
+
+    def setshortdesc(self, newdesc):
+        "Sets nonspecifc description"
+        self.shortdesc = newdesc
+
+    def getres(self):
+        "Returns dict"
+        return self.resources
+
+    def setres(self, newres):
+        "Takes dict"
+        self.resources = newres
+        
 
 class Ship(Matter):
     "A spaceship"
-    # Ship specific methods will come eventually...
+    position = (0, 0)
+    # Will implement these methods eventually
+    def mine(self, target):
+        "Mine some matter for resources"
+
+    def attack(self, target):
+        "Deal damage to some matter"
+
+    def talk(self, target, mood):
+        "Say something in in a mood to a ship/planet"
+        # Means you will have options like:
+        # 1. Hail ship threateningly
+        # 2. Hail ship friendlily
+        # Resulting in similar responses and maybe a fight
+        # or trading or something
+
+    def scan(self, target):
+        "Scan some matter, returning a detailed string"
+
+    def getpos(self):
+        return self.position
+
+    def setpos(self, newpos):
+        self.position = newpos
+
+class Planet(Matter):
+    "Planets have populations, atmospheres etc which matter does not"
 
 class Board:
     "Essentially a container for a data structure of sectors"
@@ -119,8 +169,13 @@ class Board:
     # As of now, the structure de jour is a dictionary
     starsys = {}
 
+    planet, asteroid, nothing = Matter(), Matter(), Matter()
+    planet.setshortdesc("Planet")
+    asteroid.setshortdesc("Asteroid")
+    nothing.setshortdesc("Gas and dust")
+
     # List of objects and their relative probabilities of occurring
-    objprobs = { "Planet":1, "Asteroids":10, "Gas and dust":30 }
+    objprobs = { planet:1, asteroid:3, nothing:30 }
 
     def __init__(self):
         for xpos in range(11):
@@ -150,11 +205,14 @@ def generatemap(starsys):
             # Iterates through all sectors in the starsystem, picking an
             # appropriate character to put into the map string
             cursect = starsys[(xpos, ypos)]
-            if "You are here" in cursect.getobj():
+            curobjdescs = [""]
+            for obj in cursect.getobj():
+                curobjdescs.append(obj.getshortdesc())
+            if "You are here" in curobjdescs:
                 mapstr += "P"
-            elif "Planet" in cursect.getobj():
+            elif "Planet" in curobjdescs:
                 mapstr += "O"
-            elif "Asteroids" in cursect.getobj():
+            elif "Asteroid" in curobjdescs:
                 mapstr += "A"
             else:
                 mapstr += "-"
@@ -174,10 +232,15 @@ def weightedchoice(choiceprobs):
     return choice(weightedlist)
 
 def handleaction(action, gamestate):
-    "Takes action list, calls a function or returns output"
+    "Takes action list, calls a function and/or returns output"
+    # This is a convenience function, could be in the "start" function
+    # but is not, because massive functions are not good, hard to debug
     output = ""
+
+    # This processes the context given by the main game
     starsys = gamestate[0]
     player1 = gamestate[1]
+    # Checks if help is only arg, returns generic help
     if action[0] == "help" and len(action) == 1:
         output = """\nHELP: help - prints this output
 HELP: move x y - moves to sector (x,y)
@@ -188,8 +251,10 @@ HELP: abandon - abandons current game
 HELP: exit - exits program
 HELP: help <command> - help on specific command
 HELP: help list - a list of help topics\n"""
+    # If help is longer, return specific help
     elif action[0] == "help":
         output = gethelp(action[1])
+    # Checks if move args are within board bounds, moves player
     elif action[0] == "move" :
         newy = int(action[1])
         newx = int(action[2])
@@ -198,15 +263,18 @@ HELP: help list - a list of help topics\n"""
             output = "\nINFO: Player has moved\n"
         else:
             output = "\nERROR: Out of bounds movement index\n"
+    # Causes a return to the main menu
     elif action[0] == "abandon":
         output = "terminate"
+    # Exits the entire program abruptly
     elif action[0] == "exit":
         sys.exit()
+    # Debug function, just for viewing sectors quickly
     elif action[0] == "print":
         output = ""
-        for key, val in starsys.getstarsys().items():
-            output += str(key)
-            output += str(val.getobj())
+        for pos, sect in starsys.getstarsys().items():
+            output += str(pos)
+            output += str(sect.getobjstr(False))
             output += "\n"
     else:
         output = "\nERROR: Not a valid action.\n"
@@ -232,20 +300,26 @@ HELP: This means the top left sector is (0,0) and bottom right is (10,10)\n"""
         return "\nERROR: Command not found in database\n"
 
 def start():
-    "Starts the game, returns to menu on return"
+    "Starts the game"
     starsys = Board()
-    player1 = Ship((0, 0))
+    player1 = Ship()
+    player1.setshortdesc("You are here")
+    player1.setpos((0, 0))
     output = """\nHELP: Type help for a list of commands
 HELP: The "P" on the map represents your position\n"""
     prevsect = starsys.getsect((10, 10))
     
     # This is needed as context for any convenience functions,
-    # which would otherwise be lumped in with this one
+    # which would otherwise be lumped in with this function
     gamestate = (starsys, player1)
 
     while True:
+        # cursect is a convenient object, reduces number of calls
         cursect = starsys.getsect(player1.getpos())
-        cursect.addobj("You are here")
+        cursect.addobj(player1)
+
+        # Removes the last object from the previous sector - should be the
+        # player. This avoids leaving a "P" trail through the system
         prevsect.getobj().pop()
         clear()
         sys.stdout.write(
@@ -257,11 +331,11 @@ HELP: The "P" on the map represents your position\n"""
                     + line("-INFORMATION-") 
                     + "\n")
         print ("INFO: You are in sector:\t", 
-                player1.getpos() )
+                str(player1.getpos()) )
         print ("INFO: Sector description:\t", 
                 cursect.getdesc())
         print ("INFO: Things in sector:\t\t", 
-                cursect.getobjstr())
+                cursect.getobjstr(True))
         rawact = input (line("-INPUT PROMPT-") +
                     "\n"
                     # This is short for prompt, because 4 letters
