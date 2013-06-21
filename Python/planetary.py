@@ -30,9 +30,17 @@ def clear():
 def mainmenu():
     "Simple main menu function"
     clear()
-    print ("Planetary: A game of sorts")
-    print ("(1) Start Game\n(2) Continue Game\n(3) Exit")
-    action = int(input("SELECT: "))
+    print ("""
+  _____   _                      _                      
+ |  __ \ | |                    | |                     
+ | |__) || |  __ _  _ __    ___ | |_  __ _  _ __  _   _ 
+ |  ___/ | | / _` || '_ \  / _ \| __|/ _` || '__|| | | |
+ | |     | || (_| || | | ||  __/| |_| (_| || |   | |_| |
+ |_|     |_| \__,_||_| |_| \___| \__|\__,_||_|    \__, |
+                                                   __/ |
+           A game of some sort, I believe         |___/ \n""")
+    print ("\t\t(1) Start Game\n\t\t(2) Continue Game\n\t\t(3) Exit")
+    action = int(input("\nSELECT: "))
     if action == 1:
         clear()
         print (line("") + "\nINFO: Your journey into the cosmos is beginning.\n"
@@ -168,14 +176,24 @@ class Board:
 
     # As of now, the structure de jour is a dictionary
     starsys = {}
-
-    planet, asteroid, nothing = Matter(), Matter(), Matter()
+    
+    # Generic objects
+    planet, asteroid, nothing = Planet(), Matter(), Matter()
     planet.setshortdesc("Planet")
     asteroid.setshortdesc("Asteroid")
     nothing.setshortdesc("Gas and dust")
 
+    # Special, rarer ones
+    pcolony, acolony, ruins, hulk = Planet(), Matter(), Matter(), Matter()
+    pcolony.setshortdesc("Planetary colony")
+    acolony.setshortdesc("Asteroid colony")
+    ruins.setshortdesc("Abandoned alien colony")
+    hulk.setshortdesc("Abandoned ship hulk")
+
     # List of objects and their relative probabilities of occurring
-    objprobs = { planet:1, asteroid:3, nothing:30 }
+    objprobs = { planet:10, asteroid:30, nothing:300,
+                 pcolony:5, acolony:15, hulk:5,
+                 ruins:1}
 
     def __init__(self):
         for xpos in range(11):
@@ -209,11 +227,19 @@ def generatemap(starsys):
             for obj in cursect.getobj():
                 curobjdescs.append(obj.getshortdesc())
             if "You are here" in curobjdescs:
-                mapstr += "P"
+                mapstr += "@"
             elif "Planet" in curobjdescs:
-                mapstr += "O"
+                mapstr += "P"
+            elif "Planetary colony" in curobjdescs:
+                mapstr += "C"
             elif "Asteroid" in curobjdescs:
+                mapstr += "a"
+            elif "Asteroid colony" in curobjdescs:
+                mapstr += "c"
+            elif "Abandoned alien colony" in curobjdescs:
                 mapstr += "A"
+            elif "Abandoned ship hulk" in curobjdescs:
+                mapstr += "s"
             else:
                 mapstr += "-"
         mapstr += "\n"
@@ -244,9 +270,10 @@ def handleaction(action, gamestate):
     if action[0] == "help" and len(action) == 1:
         output = """\nHELP: help - prints this output
 HELP: move x y - moves to sector (x,y)
-HELP: mine - mines at current sector
-HELP: scan - scans with range 1
+HELP: mine - coming soon
+HELP: scan - coming soon
 HELP: build - coming soon
+HELP: talk - coming soon
 HELP: abandon - abandons current game
 HELP: exit - exits program
 HELP: help <command> - help on specific command
@@ -285,9 +312,13 @@ def gethelp(command):
     maph  = """\nHELP: Below, you will find a key for the map
 HELP: 'symbol' - what it means
 HELP: '-' - Nothing
-HELP: 'P' - You, the player
-HELP: 'A' - Asteroids
-HELP: 'O' - A planet
+HELP: '@' - You, the player
+HELP: 'a' - Asteroids - mine for resources
+HELP: 'c' - An asteroid colony - trade or mine
+HELP: 'P' - A planet - Mine, land or build
+HELP: 'C' - A planetary colony - Trade, land or mine
+HELP: 's' - Another ship - Attack or trade
+HELP: 'A' - Abandoned alien colony - Mine for tech
 HELP: The map is numbered from top to bottom and left to right
 HELP: This means the top left sector is (0,0) and bottom right is (10,10)\n"""
 
@@ -306,7 +337,7 @@ def start():
     player1.setshortdesc("You are here")
     player1.setpos((0, 0))
     output = """\nHELP: Type help for a list of commands
-HELP: The "P" on the map represents your position\n"""
+HELP: The "@" on the map represents your position\n"""
     prevsect = starsys.getsect((10, 10))
     
     # This is needed as context for any convenience functions,
