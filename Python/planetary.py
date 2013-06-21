@@ -11,6 +11,7 @@ def line(header):
     output = "="
     output += header
     output += "="*(69-len(header))
+    output += "\n"
     return output
 
 def clear():
@@ -43,10 +44,10 @@ def mainmenu():
     action = int(input("\nSELECT: "))
     if action == 1:
         clear()
-        print (line("") + "\nINFO: Your journey into the cosmos is beginning.\n"
+        print (line("-INFORMATION-") + "INFO: Your journey into the cosmos is beginning.\n"
                 "INFO: You think you are high. Is any of this real?\n"
                 "INFO: The only way to find out is to engage your inner\n" 
-                "INFO: demons in space combat!\n" + line(""))
+                "INFO: demons in space combat!\n" + line("-INPUT PROMPT-"))
         # Short for "prompt", if you were wondering
         input("PRMT: Press any key to continue\n")
         start()
@@ -144,12 +145,31 @@ class Matter:
 class Ship(Matter):
     "A spaceship"
     position = (0, 0)
+    output = ""
     # Will implement these methods eventually
     def mine(self, target):
         "Mine some matter for resources"
-
+        # The 's' and 't' prefixes mean self and target 
+        for tres, tamt in target.getres().items():
+            tnewres = {}
+            tnewres[tres] = 0
+            target.setres(tnewres)
+            for sres, samt in self.getres().items():
+                snewres = self.getres()
+                snewres[sres] += tamt
+                self.setres(snewres)
+        self.output = ""
+        self.output = "INFO: Mined " 
+        self.output += target.getshortdesc().lower()
+        self.output += "\nINFO: Inventory now contains:"
+        for sres, samt in self.getres().items():
+            self.output += "\nINFO: "
+            self.output += str(samt) + " tonnes of "
+            self.output += str(sres).lower()
+            self.output += "\n"
     def attack(self, target):
         "Deal damage to some matter"
+        output = "\nINFO: Attacked something"
 
     def talk(self, target, mood):
         "Say something in in a mood to a ship/planet"
@@ -287,9 +307,11 @@ HELP: help list - a list of help topics\n"""
         newx = int(action[2])
         if newx < 11 and newy < 11:
             player1.setpos((newx, newy))
-            output = "\nINFO: Player has moved\n"
+            output = "INFO: Player has moved\n"
         else:
-            output = "\nERROR: Out of bounds movement index\n"
+            output = "ERROR: Out of bounds movement index\n"
+    elif action[0] == "mine":
+        player1.mine(starsys.getsect(player1.getpos()).getobj()[0])
     # Causes a return to the main menu
     elif action[0] == "abandon":
         output = "terminate"
@@ -304,12 +326,12 @@ HELP: help list - a list of help topics\n"""
             output += str(sect.getobjstr(False))
             output += "\n"
     else:
-        output = "\nERROR: Not a valid action.\n"
+        output = "ERROR: Not a valid action.\n"
     return output
 
 def gethelp(command):
     "Returns help for command"
-    maph  = """\nHELP: Below, you will find a key for the map
+    maph  = """HELP: Below, you will find a key for the map
 HELP: 'symbol' - what it means
 HELP: '-' - Nothing
 HELP: '@' - You, the player
@@ -322,13 +344,13 @@ HELP: 'A' - Abandoned alien colony - Mine for tech
 HELP: The map is numbered from top to bottom and left to right
 HELP: This means the top left sector is (0,0) and bottom right is (10,10)\n"""
 
-    listh = "\nHELP: List of help topics:\nHELP: map, list\n"
+    listh = "HELP: List of help topics:\nHELP: map, list\n"
     if command == "map":
         return maph
     elif command == "list":
         return listh
     else:
-        return "\nERROR: Command not found in database\n"
+        return "ERROR: Command not found in database\n"
 
 def start():
     "Starts the game"
@@ -336,7 +358,7 @@ def start():
     player1 = Ship()
     player1.setshortdesc("You are here")
     player1.setpos((0, 0))
-    output = """\nHELP: Type help for a list of commands
+    output = """HELP: Type help for a list of commands
 HELP: The "@" on the map represents your position\n"""
     prevsect = starsys.getsect((10, 10))
     
@@ -355,12 +377,11 @@ HELP: The "@" on the map represents your position\n"""
         clear()
         sys.stdout.write(
                     line("-MAP-")
-                    + "\n"
                     + generatemap(starsys.getstarsys()) 
                     + line("-OUTPUT-")
+                    + player1.output
                     + output 
-                    + line("-INFORMATION-") 
-                    + "\n")
+                    + line("-INFORMATION-"))
         print ("INFO: You are in sector:\t", 
                 str(player1.getpos()) )
         print ("INFO: Sector description:\t", 
