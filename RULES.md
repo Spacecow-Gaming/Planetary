@@ -40,6 +40,6 @@ Planets are small sub-boards that range from having a circumference between 16 s
 * Water platform- a grate above water, allowing units to walk up to oil deposits in a lake. Not naturally generating.
  At the end of each round, a planet flips 180 degrees on its axis- so the area which a ship can land on changes every turn, and areas which were previously day become night, and vice versa.
 
-##End of game-##
+##End of game##
 
   The last team standing (ie: a player with units left alive) is the winner. They receive some virtual money (20n, where n is the number of players), and copies of all of the blueprints used which their ship destroyed. Those who come in 2nd, 3rd and so on get copies of 1/(2^(n-1)) of the blueprints of the ship parts which they destroyed in-game (rounded down and randomly selected), and 1/(2^(n-1)) of the money, except for the last player, which gets nothing. Those who destroyed no spaceship parts, but didn’t come last, get a complimentary mid-tier blueprint.
