@@ -1,5 +1,5 @@
+# Copyright (c) 2013 Spacecow Gaming
 "Ship classes, sizes, whatever. But they all inherit from matter"
-
 from matter import *
 
 class Ship(Matter):
