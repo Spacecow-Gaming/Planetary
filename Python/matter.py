@@ -1,3 +1,4 @@
+# Copyright (c) 2013 Spacecow Gaming
 "Types of matter, things made of matter etc"
 
 from random import choice

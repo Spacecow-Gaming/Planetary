@@ -1,3 +1,4 @@
+# Copyright (c) 2013 Spacecow Gaming
 "Abstract game objects which don't really affect the player"
 
 from matter import *
