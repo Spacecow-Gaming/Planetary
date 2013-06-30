@@ -6,7 +6,7 @@ from os import name
 from subprocess import call
 import ships
 import game
-
+import matter
 
 def line(header):
     "Returns nicely formatted header with '=' line"
@@ -172,7 +172,7 @@ HELP: The "@" on the map represents your position\n"""
         clear()
         sys.stdout.write(
                     line("-MAP-")
-                    + generatemap(starsys.getstarsys()) 
+                    + game.generatemap(starsys.getstarsys()) 
                     + line("-OUTPUT-")
                     + player1.getout()
                     + output 
