@@ -1,0 +1,31 @@
+{
+    "Matter":
+    {
+        "Generic matter. Made of...neutrinos? The scanners can't tell.":1
+    },
+    "Gas and dust":
+    {
+        "A few hydrogen atoms here and there.":1
+    },
+    "Planet":
+    {
+        "Pretty standard planet. Rocks and stuff.":10,
+        "Slightly interesting planet. Maybe some minerals.":7,
+        "Look at the scanner. Now back to me. Now back to the scanner. The planet is now diamond.":2
+    },
+    "Planetary Colony":
+    {
+        "Some people live on this lush, green planet.":5,
+        "Several million make their home on this veritable metropolis of a planet":1
+    },
+    "Asteroid":
+    {
+        "It's made of rocks, what did you expect?":20,
+        "SOLID GOLD. Seriously. You are rich.":1
+    },
+    "Asteroid Colony":
+    {
+        "A small, abandoned mining outpost is now occupied by a few desperate survivors.":3,
+        "A functional mining outpost with minerals by the kiloton.":1
+    }
+}
