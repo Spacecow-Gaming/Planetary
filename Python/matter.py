@@ -28,6 +28,9 @@ class Matter:
     # Resources you get when you mine it, in tons
     resources = {"Rocks":10}
 
+    def __init__(self):
+        "Does shit"
+
     def getdesc(self):
         "Returns string"
         return self.description

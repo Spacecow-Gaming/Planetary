@@ -4,9 +4,8 @@
 import sys
 from os import name
 from subprocess import call
-from matter import *
-from ships import *
-from game import *
+import ships
+import game
 
 
 def line(header):
@@ -47,7 +46,8 @@ def mainmenu():
     action = int(input("\n> "))
     if action == 1:
         clear()
-        sys.stdout.write (line("-INFORMATION-") + "INFO: Your journey into the cosmos is beginning.\n"
+        sys.stdout.write (line("-INFORMATION-") +
+                "INFO: Your journey into the cosmos is beginning.\n"
                 "INFO: You think you are high. Is any of this real?\n"
                 "INFO: The only way to find out is to engage your inner\n" 
                 "INFO: demons in space combat!\n" 
@@ -149,8 +149,8 @@ HELP: This means the top left sector is (0,0) and bottom right is (10,10)\n"""
 
 def start():
     "Starts the game"
-    starsys = Board()
-    player1 = Ship()
+    starsys = game.Board()
+    player1 = ships.Ship()
     player1.setshortdesc("You are here")
     player1.setpos((0, 0))
     output = """HELP: Type help for a list of commands

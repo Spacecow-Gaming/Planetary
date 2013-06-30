@@ -1,7 +1,7 @@
 # Copyright (c) 2013 Spacecow Gaming
 "Abstract game objects which don't really affect the player"
 
-from matter import *
+import matter
 
 class Sector:
     "Base unit of board" 
@@ -56,7 +56,8 @@ class Board:
     starsys = {}
     
     # Generic objects
-    planet, asteroid, nothing = Planet(), Matter(), Matter()
+    planet, asteroid = matter.Planet(), matter.Matter()
+    nothing = matter.Matter()
     planet.setshortdesc("Planet")
     planet.setdesc("A standard planet, with abundant rock resources")
     asteroid.setshortdesc("Asteroid")
@@ -65,18 +66,21 @@ class Board:
     nothing.setdesc("Slightly more detailed gas and dust")
 
     # Special, rarer ones
-    pcolony, acolony, ruins, hulk = Planet(), Matter(), Matter(), Matter()
+    pcolony, acolony = matter.Planet(), matter.Matter()
+    ruins = matter.Matter()
+    hulk = matter.Matter()
     pcolony.setshortdesc("Planetary colony")
     pcolony.setdesc("A small settlement with a population of a few thousand\n"
             "INFO: Perhaps they have good to trade. "
             "There is only one way to find out.\n"
             "INFO: Recommended course of action: open hailing frequencies")
     acolony.setshortdesc("Asteroid colony")
-    acolony.setdesc("A former mining outpost turned settlement. The ground is rich with rocks\n")
+    acolony.setdesc("A former mining outpost turned settlement."
+                    "The ground is rich with rocks\n")
     ruins.setshortdesc("Abandoned alien colony")
     ruins.setdesc("Aliens used to be here, but aren't any more.\n"
             "INFO: The scanners cannot penetrate the walls of the ruins.\n"
-            "INFO: The only way to ascertain whether there's any technology is to land")
+            "INFO: You must land for further investigation")
     hulk.setshortdesc("Abandoned ship hulk")
     hulk.setdesc("The scanners cannot penetrate the hulk's hull")
 
@@ -93,7 +97,7 @@ class Board:
                 # function to pick an object to assign as a value, which 
                 # is a list of strings, for the key, which is a tuple
                 newsect = Sector("Nothing of note", [])
-                newsect.addobj(weightedchoice(self.objprobs))
+                newsect.addobj(matter.weightedchoice(self.objprobs))
                 self.starsys[(xpos, ypos)] = newsect
 
     def getstarsys(self):
