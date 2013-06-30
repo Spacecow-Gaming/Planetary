@@ -1,15 +1,15 @@
 # Copyright (c) 2013 Spacecow Gaming
 "Ship classes, sizes, whatever. But they all inherit from matter"
-from matter import *
+import matter
 
-class Ship(Matter):
+class Ship(matter.Matter):
     "A spaceship"
     position = (0, 0)
     output = ""
     # Will implement these methods eventually
     def mine(self, target):
-        self.output = ""
         "Mine some matter for resources"
+        self.output = ""
         # The 's' and 't' prefixes mean self and target 
         for tres, tamt in target.getres().items():
             tnewres = {}
@@ -52,14 +52,18 @@ class Ship(Matter):
         self.output = "INFO: "+ target.getdesc() + "\n"
 
     def getout(self):
+        "Gets output - only useful for player instances"
         return self.output
 
     def setout(self, newout):
+        "Sets output to be displayed to player"
         self.output = newout
 
     def getpos(self):
+        "Returns pos tuple"
         return self.position
 
     def setpos(self, newpos):
+        "Takes pos tuple"
         self.position = newpos
 
