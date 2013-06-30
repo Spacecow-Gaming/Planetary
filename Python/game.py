@@ -56,38 +56,15 @@ class Board:
     starsys = {}
     
     # Generic objects
-    planet, asteroid = matter.Planet(), matter.Matter()
-    nothing = matter.Matter()
-    planet.setshortdesc("Planet")
-    planet.setdesc("A standard planet, with abundant rock resources")
-    asteroid.setshortdesc("Asteroid")
-    asteroid.setdesc("A standard asteroid, which is actually made of rocks")
-    nothing.setshortdesc("Gas and dust")
-    nothing.setdesc("Slightly more detailed gas and dust")
+    planet, asteroid = matter.Planet(), matter.Asteroid()
+    nothing = matter.Gas()
 
     # Special, rarer ones
-    pcolony, acolony = matter.Planet(), matter.Matter()
-    ruins = matter.Matter()
-    hulk = matter.Matter()
-    pcolony.setshortdesc("Planetary colony")
-    pcolony.setdesc("A small settlement with a population of a few thousand\n"
-            "INFO: Perhaps they have good to trade. "
-            "There is only one way to find out.\n"
-            "INFO: Recommended course of action: open hailing frequencies")
-    acolony.setshortdesc("Asteroid colony")
-    acolony.setdesc("A former mining outpost turned settlement."
-                    "The ground is rich with rocks\n")
-    ruins.setshortdesc("Abandoned alien colony")
-    ruins.setdesc("Aliens used to be here, but aren't any more.\n"
-            "INFO: The scanners cannot penetrate the walls of the ruins.\n"
-            "INFO: You must land for further investigation")
-    hulk.setshortdesc("Abandoned ship hulk")
-    hulk.setdesc("The scanners cannot penetrate the hulk's hull")
+    pcolony, acolony = matter.PColony(), matter.AColony()
 
     # List of objects and their relative probabilities of occurring
     objprobs = { planet:10, asteroid:30, nothing:300,
-                 pcolony:5, acolony:15, hulk:5,
-                 ruins:1}
+                 pcolony:5, acolony:15 }
 
     def __init__(self):
         for xpos in range(11):
@@ -113,27 +90,24 @@ def generatemap(starsys):
     mapstr = ""
     for xpos in range(11):
         for ypos in range(11):
-
             # Iterates through all sectors in the starsystem, picking an
             # appropriate character to put into the map string
             cursect = starsys[(xpos, ypos)]
             curobjdescs = [""]
+
+            # Translates shortdesc to map symbol
             for obj in cursect.getobj():
                 curobjdescs.append(obj.getshortdesc())
             if "You are here" in curobjdescs:
                 mapstr += "@"
             elif "Planet" in curobjdescs:
                 mapstr += "P"
-            elif "Planetary colony" in curobjdescs:
+            elif "Planetary Colony" in curobjdescs:
                 mapstr += "C"
             elif "Asteroid" in curobjdescs:
                 mapstr += "a"
-            elif "Asteroid colony" in curobjdescs:
+            elif "Asteroid Colony" in curobjdescs:
                 mapstr += "c"
-            elif "Abandoned alien colony" in curobjdescs:
-                mapstr += "A"
-            elif "Abandoned ship hulk" in curobjdescs:
-                mapstr += "s"
             else:
                 mapstr += "-"
         mapstr += "\n"
