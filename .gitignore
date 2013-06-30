@@ -1,9 +1,3 @@
 # Java ignores
 *.class
 *.jar
-*.war
-*.ear
-
-# Haskell ignores
-*.o
-*.hi
