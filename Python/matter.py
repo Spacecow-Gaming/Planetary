@@ -2,6 +2,7 @@
 "Types of matter, things made of matter etc"
 
 from random import choice
+import json
 
 # As good a place as any to put this
 def weightedchoice(choiceprobs):
@@ -21,15 +22,19 @@ class Matter:
     "Everything on the map is matter"
 
     # What is returned when scanned
-    description = "It's made of rocks"
-
-    shortdesc = "Asteroid"
+    description = "It's very generic"
+    shortdesc = "Matter"
+    descdict = {}
 
     # Resources you get when you mine it, in tons
     resources = {"Rocks":10}
 
     def __init__(self):
-        "Does shit"
+        "Reads and sets desc (and soon other data) from JSON file"
+        descraw = open("desc.json", "r").read()
+        descdictfull = json.loads(descraw)
+        self.descdict = descdictfull[self.shortdesc]
+        self.setdesc(weightedchoice(self.descdict))
 
     def getdesc(self):
         "Returns string"
@@ -55,10 +60,26 @@ class Matter:
         "Takes dict"
         self.resources = newres
 
+class Gas(Matter):
+    "Has effects on ships, sometimes"
+    shortdesc = "Gas and dust"
+
 class Planet(Matter):
-    "Planets have populations, atmospheres etc which matter does not"
-    # Will implement later. Things to do:
-    # 1. Traders units and their inventories
-    # 2. Planet subsectors, for landing and exploring
+    "Planets have atmospheres, subsectors etc which matter does not"
+    shortdesc = "Planet"
+
+
+class PColony(Planet):
+    "Colonies have populations, shops etc"    
+    shortdesc = "Planetary Colony"
+
+class Asteroid(Matter):
+    "Asteroids do not have vegetation and are smaller"
+    shortdesc = "Asteroid"
+
+class AColony(Asteroid):
+    "People, shops, but also hull integrity and other ship-like things"
+    shortdesc = "Asteroid Colony"
+
 
 
