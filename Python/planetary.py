@@ -135,7 +135,6 @@ HELP: 'c' - An asteroid colony - trade or mine
 HELP: 'P' - A planet - Mine, land or build
 HELP: 'C' - A planetary colony - Trade, land or mine
 HELP: 's' - Another ship - Attack or trade
-HELP: 'A' - Abandoned alien colony - Mine for tech
 HELP: The map is numbered from top to bottom and left to right
 HELP: This means the top left sector is (0,0) and bottom right is (10,10)\n"""
 
@@ -150,7 +149,7 @@ HELP: This means the top left sector is (0,0) and bottom right is (10,10)\n"""
 def start():
     "Starts the game"
     starsys = game.Board()
-    player1 = ships.Ship()
+    player1 = ships.Player()
     player1.setshortdesc("You are here")
     player1.setpos((0, 0))
     output = """HELP: Type help for a list of commands
