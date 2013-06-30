@@ -60,6 +60,8 @@ public class game{
 		}else if(moveChoice.equals("help")){
 			System.out.println(helptext);
             choice();
+		}else if(moveChoice.equals("exit")){
+			System.exit(0);
 		}else{
 			System.out.println("Sorry Captain, did you want to mine, explore, build or shop?");
 			choice();
