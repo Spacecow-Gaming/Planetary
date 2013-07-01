@@ -1,0 +1,20 @@
+{
+    "map":
+        [
+        "Below, you will find a key for the map",
+        "'symbol' - what it means",
+        "'-' - Nothing",
+        "'@' - You, the player",
+        "'a' - Asteroids - mine for resources",
+        "'c' - An asteroid colony - trade or mine",
+        "'P' - A planet - Mine, land or build",
+        "'C' - A planetary colony - Trade, land or mine",
+        "'s' - Another ship - Attack or trade",
+        "The map is numbered from top to bottom and left to right",
+        "This means the top left sector is (0,0) and bottom right is (10,10)\n"
+        ],
+    "list":
+        [
+        "map, list"
+        ]
+}
