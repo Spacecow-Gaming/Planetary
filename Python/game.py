@@ -32,11 +32,11 @@ class Sector:
         for obj in self.objects:
             objstr += obj.getshortdesc() 
             if formatted:
-                objstr += "\n\t\t\t\t "
+                objstr += "\n\t\t\t "
         # Since I'm new to Python, there might be a more pythonic
         # way to do str manipulation which I don't know about
         tmplist = list(objstr)
-        tmplist = tmplist[:-6]
+        tmplist = tmplist[:-5]
         objstr = "".join(tmplist)
         return objstr
 
