@@ -7,6 +7,7 @@ from subprocess import call
 import ships
 import game
 import matter
+import json
 
 def line(header):
     "Returns nicely formatted header with '=' line"
@@ -43,15 +44,21 @@ def mainmenu():
                                                    __/ |
            A game of some sort, I believe         |___/ \n""")
     print ("\t\t(1) Start Game\n\t\t(2) Continue Game\n\t\t(3) Exit")
-    action = int(input("\n> "))
+    action = ""
+    action = input("\n> ")
+    if action == "":
+        clear()
+    else:
+        action = int(action)
+
     if action == 1:
         clear()
         sys.stdout.write (line("-INFORMATION-") +
-                "INFO: Your journey into the cosmos is beginning.\n"
-                "INFO: You think you are high. Is any of this real?\n"
-                "INFO: The only way to find out is to engage your inner\n" 
-                "INFO: demons in space combat!\n" 
-                "INFO: Press Enter to continue...\n"
+                "Your journey into the cosmos is beginning.\n"
+                "You think you are high. Is any of this real?\n"
+                "The only way to find out is to engage your inner" 
+                "demons in space combat!\n" 
+                "Press Enter to continue...\n"
                 + line("-INPUT PROMPT-"))
         # Short for "prompt", if you were wondering
         input("> ")
@@ -98,7 +105,7 @@ HELP: help list - a list of help topics\n"""
         if newx < 11 and newy < 11:
             player1.setpos((newx, newy))
             player1.setout("")
-            output = "INFO: Player has moved\n"
+            output = "Player has moved\n"
         else:
             output = "ERROR: Out of bounds movement index\n"
     elif action[0] == "mine":
@@ -126,25 +133,15 @@ HELP: help list - a list of help topics\n"""
 
 def gethelp(command):
     "Returns help for command"
-    maph  = """HELP: Below, you will find a key for the map
-HELP: 'symbol' - what it means
-HELP: '-' - Nothing
-HELP: '@' - You, the player
-HELP: 'a' - Asteroids - mine for resources
-HELP: 'c' - An asteroid colony - trade or mine
-HELP: 'P' - A planet - Mine, land or build
-HELP: 'C' - A planetary colony - Trade, land or mine
-HELP: 's' - Another ship - Attack or trade
-HELP: The map is numbered from top to bottom and left to right
-HELP: This means the top left sector is (0,0) and bottom right is (10,10)\n"""
-
-    listh = "HELP: List of help topics:\nHELP: map, list\n"
-    if command == "map":
-        return maph
-    elif command == "list":
-        return listh
+    helpfile = open("help.json", "r").read()
+    helpdict = json.loads(helpfile)
+    if command in helpdict:
+        helplist = helpdict[command]
+        output = "\n".join(helpdict[command])
     else:
-        return "ERROR: Command not found in database\n"
+        output = "ERROR: Command not found."
+    return output
+
 
 def start():
     "Starts the game"
@@ -176,11 +173,11 @@ HELP: The "@" on the map represents your position\n"""
                     + player1.getout()
                     + output 
                     + line("-INFORMATION-"))
-        print ("INFO: You are in sector:\t", 
+        print ("You are in sector:\t", 
                 str(player1.getpos()) )
-        print ("INFO: Sector description:\t", 
+        print ("Sector description:\t", 
                 cursect.getdesc())
-        print ("INFO: Things in sector:\t\t", 
+        print ("Things in sector:\t", 
                 cursect.getobjstr(True))
         rawact = input (line("-INPUT PROMPT-") +
                     "> ")
