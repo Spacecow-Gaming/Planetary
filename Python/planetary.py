@@ -60,7 +60,6 @@ def mainmenu():
                 "demons in space combat!\n" 
                 "Press Enter to continue...\n"
                 + line("-INPUT PROMPT-"))
-        # Short for "prompt", if you were wondering
         input("> ")
         start()
     elif action == 2:
@@ -111,11 +110,7 @@ def handleaction(action, gamestate):
         sys.exit()
     # Debug function, just for viewing sectors quickly
     elif action[0] == "print":
-        output = ""
-        for pos, sect in starsys.getstarsys().items():
-            output += str(pos)
-            output += str(sect.getobjstr(False))
-            output += "\n"
+        output = str(player1.getres().items())
     else:
         output = "ERROR: Not a valid action.\n"
     return output
@@ -160,7 +155,7 @@ HELP: The "@" on the map represents your position\n"""
                     + game.generatemap(starsys.getstarsys()) 
                     + line("-OUTPUT-")
                     + player1.getout()
-                    + output 
+                    + output + "\n"
                     + line("-INFORMATION-"))
         print ("You are in sector:\t", 
                 str(player1.getpos()) )
