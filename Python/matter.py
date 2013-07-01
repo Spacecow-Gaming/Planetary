@@ -24,17 +24,27 @@ class Matter:
     # What is returned when scanned
     description = "It's very generic"
     shortdesc = "Matter"
-    descdict = {}
 
     # Resources you get when you mine it, in tons
-    resources = {"Rocks":10}
+    resources = {}
 
     def __init__(self):
-        "Reads and sets desc (and soon other data) from JSON file"
-        descraw = open("matter.json", "r").read()
-        descdictfull = json.loads(descraw)
-        self.descdict = descdictfull[self.shortdesc]
-        self.setdesc(weightedchoice(self.descdict))
+        "Reads and sets properties from JSON file"
+
+        # Reads file
+        matterfile = open("matter.json", "r").read()
+
+        # Turns into dict with JSON, finds appropriate part for the type
+        # of object this matter is
+        dictfull = json.loads(matterfile)[self.shortdesc]
+
+        # Sets description from weighted list in JSON file
+        descdict = dictfull["Description"]
+        self.setdesc(weightedchoice(descdict))
+
+        # Sets resource counts from JSON file
+        resdict = dictfull["Resources"]
+        self.setres(eval(weightedchoice(resdict)))
 
     def getdesc(self):
         "Returns string"
