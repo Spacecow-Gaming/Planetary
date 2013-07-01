@@ -8,7 +8,6 @@ class Ship(matter.Matter):
     # Will implement these methods eventually
     def mine(self, target):
         "Mine some matter for resources"
-        self.output = ""
         # The 's' and 't' prefixes mean self and target 
         for tres, tamt in target.getres().items():
             tnewres = {}
@@ -20,7 +19,6 @@ class Ship(matter.Matter):
                 self.setres(snewres)
     def attack(self, target):
         "Deal damage to some matter"
-        self.output = "\nINFO: Attacked something"
 
     def talk(self, target, mood):
         "Say something in in a mood to a ship/planet"
@@ -32,7 +30,7 @@ class Ship(matter.Matter):
 
     def getpos(self):
         "Returns pos tuple"
-        return self.position
+        return (self.position[1], self.position[0])
 
     def setpos(self, newpos):
         "Takes pos tuple"
@@ -44,13 +42,13 @@ class Player(Ship):
 
     def scan(self, target):
         "Scan some matter, returning a detailed string"
-        self.output = "INFO: "+ target.getdesc() + "\n"
+        self.output = ""+ target.getdesc() + "\n"
 
     def viewinv(self):
         "Shows resources on player"
-        self.output = "INFO: Inventory contains:"
+        self.output = "Inventory contains:"
         for res, amt in self.getres().items():
-            self.output += "\nINFO: "
+            self.output += "\n"
             self.output += str(amt) + " tonnes of "
             self.output += str(res).lower() + "\n"
 
@@ -74,17 +72,17 @@ class Player(Ship):
                 snewres = self.getres()
                 snewres[sres] += tamt
                 self.setres(snewres)
-        self.output = "INFO: Mined " 
+        self.output = "Mined " 
         self.output += target.getshortdesc().lower()
-        self.output += "\nINFO: Inventory now contains:"
+        self.output += "\nInventory now contains:"
         for sres, samt in self.getres().items():
-            self.output += "\nINFO: "
+            self.output += "\n"
             self.output += str(samt) + " tonnes of "
             self.output += str(sres).lower()
             self.output += "\n"
     def attack(self, target):
         "Deal damage to some matter"
-        self.output = "INFO: Attacked" + target.getshortdesc().lower()
+        self.output = "Attacked" + target.getshortdesc().lower()
 
 
 
