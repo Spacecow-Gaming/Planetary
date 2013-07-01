@@ -152,7 +152,9 @@ HELP: The "@" on the map represents your position\n"""
         clear()
         sys.stdout.write(
                     line("-MAP-")
-                    + game.generatemap(starsys.getstarsys()) 
+                    + game.generatemap(starsys.getstarsys(), 11) 
+                    + line("-OBJECT MAP-")
+                    + game.generatemap(cursect.getmap(), 11)
                     + line("-OUTPUT-")
                     + player1.getout()
                     + output + "\n"
