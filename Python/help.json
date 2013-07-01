@@ -1,4 +1,18 @@
 {
+    "generic":
+        [
+        "help - prints this output",
+        "move x y - moves to sector (x,y)",
+        "mine - mines object at current sector",
+        "view inv - views current inventory",
+        "scan - coming soon",
+        "build - coming soon",
+        "talk - coming soon",
+        "abandon - abandons current game",
+        "exit - exits program",
+        "help <command> - help on specific command",
+        "help list - a list of help topics"
+        ],
     "map":
         [
         "Below, you will find a key for the map",
@@ -11,7 +25,7 @@
         "'C' - A planetary colony - Trade, land or mine",
         "'s' - Another ship - Attack or trade",
         "The map is numbered from top to bottom and left to right",
-        "This means the top left sector is (0,0) and bottom right is (10,10)\n"
+        "This means the top left sector is (0,0) and bottom right is (10,10)"
         ],
     "list":
         [

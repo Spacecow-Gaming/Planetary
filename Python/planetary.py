@@ -84,20 +84,9 @@ def handleaction(action, gamestate):
     player1 = gamestate[1]
     # Checks if help is only arg, returns generic help
     if action[0] == "help" and len(action) == 1:
-        output = """\nHELP: help - prints this output
-HELP: move x y - moves to sector (x,y)
-HELP: mine - mines object at current sector
-HELP: view inv - views current inventory
-HELP: scan - coming soon
-HELP: build - coming soon
-HELP: talk - coming soon
-HELP: abandon - abandons current game
-HELP: exit - exits program
-HELP: help <command> - help on specific command
-HELP: help list - a list of help topics\n"""
-    # If help is longer, return specific help
+        output = gethelp("generic") + "\n"
     elif action[0] == "help":
-        output = gethelp(action[1])
+        output = gethelp(action[1]) + "\n"
     # Checks if move args are within board bounds, moves player
     elif action[0] == "move" :
         newy = int(action[1])
