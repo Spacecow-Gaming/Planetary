@@ -31,7 +31,7 @@ class Matter:
 
     def __init__(self):
         "Reads and sets desc (and soon other data) from JSON file"
-        descraw = open("desc.json", "r").read()
+        descraw = open("matter.json", "r").read()
         descdictfull = json.loads(descraw)
         self.descdict = descdictfull[self.shortdesc]
         self.setdesc(weightedchoice(self.descdict))
