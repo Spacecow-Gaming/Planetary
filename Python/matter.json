@@ -29,7 +29,7 @@
         },
         "Resources":
         {
-            "{'Metal':5}":1
+            "{'Metal':2}":1
         }
     },
     "Player":
@@ -64,8 +64,8 @@
         },
         "Resources":
         {
-            "{'Rocks':20}":5,
-            "{'Rocks':15, 'Metal':5}":1
+            "{'Rocks':5}":5,
+            "{'Rocks':4, 'Metal':1}":1
         }
     },
     "Planetary Colony":
@@ -77,8 +77,8 @@
         },
         "Resources":
         {
-            "{'Rocks':20, 'Money':5}":3,
-            "{'Rocks':25, 'Money':10, 'Metal':5}":1
+            "{'Rocks':5, 'Money':1}":3,
+            "{'Rocks':6, 'Money':2, 'Metal':2}":1
         
         }
     },
@@ -91,7 +91,7 @@
         },
         "Resources":
         {
-            "{'Rocks':5}":1
+            "{'Rocks':1}":1
         }
     },
     "Asteroid Colony":
@@ -103,9 +103,20 @@
         },
         "Resources":
         {
-            "{'Rocks':7,  'Metal':1}":3,
-            "{'Rocks':5, 'Metal':3}":1
+            "{'Rocks':2,  'Metal':1}":3,
+            "{'Rocks':3, 'Metal':2}":1
 
+        }
+    },
+    "Shop":
+    {
+        "Description":
+        {
+            "Buy shit here.":1
+        },
+        "Resources":
+        {
+            "{'No':100}":1
         }
     }
 }
