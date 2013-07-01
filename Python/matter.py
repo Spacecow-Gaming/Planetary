@@ -1,22 +1,8 @@
 # Copyright (c) 2013 Spacecow Gaming
 "Types of matter, things made of matter etc"
 
-from random import choice
+from useful import weightedchoice
 import json
-
-# As good a place as any to put this
-def weightedchoice(choiceprobs):
-    "Takes a dictionary of choices and probabilities, returns a choice"
-    # This list comprehension takes a dictionary of choice keys and
-    # probability values and generates a list where each choice
-    # occurs a number of times equal to the probability value. This is
-    # because the values supplied are relative to each other i.e.
-    # don't add up to 1. What the values add up to doesn't matter, as 
-    # long as they are integral.
-    weightedlist = [x for choice, prob in choiceprobs.items() 
-                    for x in [choice]*prob ]
-    return choice(weightedlist)
-
 
 class Matter:
     "Everything on the map is matter"
@@ -70,6 +56,8 @@ class Matter:
         "Takes dict"
         self.resources = newres
 
+# Top-level matter objects i.e. in space
+
 class Gas(Matter):
     "Has effects on ships, sometimes"
     shortdesc = "Gas and dust"
@@ -91,5 +79,8 @@ class AColony(Asteroid):
     "People, shops, but also hull integrity and other ship-like things"
     shortdesc = "Asteroid Colony"
 
+# Second level objects i.e. on the ground
 
-
+class Shop(Matter):
+    "Buy stuff here"
+    shortdesc = "Shop"

@@ -41,9 +41,8 @@ class Player(Ship):
 
     def viewinv(self):
         "Shows resources on player"
-        self.output = "Inventory contains:"
+        self.output = "Inventory contains:\n"
         for res, amt in self.getres().items():
-            self.output += "\n"
             self.output += str(amt) + " tonnes of "
             self.output += str(res).lower() + "\n"
 
