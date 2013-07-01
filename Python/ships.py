@@ -5,18 +5,8 @@ import matter
 class Ship(matter.Matter):
     "A spaceship"
     position = (0, 0)
+    shortdesc = "Ship"
     # Will implement these methods eventually
-    def mine(self, target):
-        "Mine some matter for resources"
-        # The 's' and 't' prefixes mean self and target 
-        for tres, tamt in target.getres().items():
-            tnewres = {}
-            tnewres[tres] = 0
-            target.setres(tnewres)
-            for sres, samt in self.getres().items():
-                snewres = self.getres()
-                snewres[sres] += tamt
-                self.setres(snewres)
     def attack(self, target):
         "Deal damage to some matter"
 
@@ -30,7 +20,7 @@ class Ship(matter.Matter):
 
     def getpos(self):
         "Returns pos tuple"
-        return (self.position[1], self.position[0])
+        return self.position
 
     def setpos(self, newpos):
         "Takes pos tuple"
@@ -39,10 +29,15 @@ class Ship(matter.Matter):
 class Player(Ship):
     "Ship, but with text output and status functions"
     output = ""
+    shortdesc = "Player"
 
     def scan(self, target):
         "Scan some matter, returning a detailed string"
         self.output = ""+ target.getdesc() + "\n"
+        for res, amt in target.getres().items():
+            self.output += str(amt) + " tonnes of "
+            self.output += str(res).lower() + "\n"
+
 
     def viewinv(self):
         "Shows resources on player"
@@ -64,22 +59,16 @@ class Player(Ship):
         "Mine some matter for resources"
         self.output = ""
         # The 's' and 't' prefixes mean self and target 
+        snewres = self.getres()
+        tnewres = target.getres()
         for tres, tamt in target.getres().items():
-            tnewres = {}
-            tnewres[tres] = 0
-            target.setres(tnewres)
             for sres, samt in self.getres().items():
-                snewres = self.getres()
-                snewres[sres] += tamt
-                self.setres(snewres)
+                if sres == tres:
+                    snewres[sres] += tamt
+        target.setres(tnewres)
         self.output = "Mined " 
         self.output += target.getshortdesc().lower()
-        self.output += "\nInventory now contains:"
-        for sres, samt in self.getres().items():
-            self.output += "\n"
-            self.output += str(samt) + " tonnes of "
-            self.output += str(sres).lower()
-            self.output += "\n"
+
     def attack(self, target):
         "Deal damage to some matter"
         self.output = "Attacked" + target.getshortdesc().lower()
