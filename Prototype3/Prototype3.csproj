@@ -45,25 +45,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game.cs" />
-    <Compile Include="PlanetaryMenuForm.cs">
+    <Compile Include="Forms\PlanetaryMenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PlanetaryMenuForm.Designer.cs">
+    <Compile Include="Forms\PlanetaryMenuForm.Designer.cs">
       <DependentUpon>PlanetaryMenuForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Matter.cs" />
-    <Compile Include="PlanetaryGameForm.cs">
+    <Compile Include="Forms\PlanetaryGameForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PlanetaryGameForm.Designer.cs">
+    <Compile Include="Forms\PlanetaryGameForm.Designer.cs">
       <DependentUpon>PlanetaryGameForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Planetary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="PlanetaryGameForm.resx">
+    <EmbeddedResource Include="Forms\PlanetaryGameForm.resx">
       <DependentUpon>PlanetaryGameForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PlanetaryMenuForm.resx">
+    <EmbeddedResource Include="Forms\PlanetaryMenuForm.resx">
       <DependentUpon>PlanetaryMenuForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
