@@ -30,15 +30,36 @@ namespace Planetary
         /// </summary>
         private void MainMenu()
         {
-            Window MenuWindow = 
-                new Window(new VideoMode(640, 480), "Planetary");
+            RenderWindow MenuWindow = 
+                new RenderWindow(new VideoMode(640, 480), "Planetary");
             MenuWindow.SetVisible(true);
             MenuWindow.Closed += 
                 delegate(Object o, EventArgs e) { MenuWindow.Close(); };
 
+            // These are the buttons
+            Texture ExitT = new Texture("Media/exit.png");
+            Sprite ExitS = new Sprite(ExitT);
+            Texture StartT = new Texture("Media/start.png");
+            Sprite StartS = new Sprite(StartT);
+
+            // These are the nice-looking things which aren't strictly
+            // necessary
+            Texture TitleT = new Texture("Media/title.png");
+            Sprite TitleS = new Sprite(TitleT);
+            Texture BackgroundT = new Texture("Media/menuback.png");
+            Sprite BackgroundS = new Sprite(BackgroundT);
+
             while (MenuWindow.IsOpen())
             {
                 MenuWindow.DispatchEvents();
+                BackgroundS.Position = new Vector2f(0, 0);
+                TitleS.Position = new Vector2f(224, 0);
+                StartS.Position = new Vector2f(288, 200);
+                ExitS.Position = new Vector2f(288, 240);
+                MenuWindow.Draw(BackgroundS);
+                MenuWindow.Draw(TitleS);
+                MenuWindow.Draw(StartS);
+                MenuWindow.Draw(ExitS);
                 MenuWindow.Display();
             }
         }
