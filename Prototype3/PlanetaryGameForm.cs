@@ -19,6 +19,7 @@ namespace Planetary
 
         private void ToMenuButton_Click(object sender, EventArgs e)
         {
+            Owner.Location = this.Location;
             Owner.Show();
             this.Close();
         }

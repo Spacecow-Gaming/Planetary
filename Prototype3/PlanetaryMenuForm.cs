@@ -21,6 +21,8 @@ namespace Planetary
         {
             this.Hide();
             PlanetaryGameForm GameForm = new PlanetaryGameForm();
+            GameForm.StartPosition = FormStartPosition.Manual;
+            GameForm.Location = this.Location;
             GameForm.ShowDialog(this);
         }
     }
