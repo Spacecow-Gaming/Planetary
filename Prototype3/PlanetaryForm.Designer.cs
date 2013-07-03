@@ -35,6 +35,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
@@ -77,7 +79,7 @@
             // 
             this.groupBox1.Location = new System.Drawing.Point(336, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(284, 429);
+            this.groupBox1.Size = new System.Drawing.Size(284, 400);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ship";
@@ -100,11 +102,29 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Information";
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(336, 418);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 9;
+            this.button5.Text = "Move To:";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(417, 418);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(203, 20);
+            this.textBox1.TabIndex = 10;
+            // 
             // PlanetaryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(632, 453);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -115,6 +135,7 @@
             this.Name = "PlanetaryForm";
             this.Text = "Planetary";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -127,6 +148,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
