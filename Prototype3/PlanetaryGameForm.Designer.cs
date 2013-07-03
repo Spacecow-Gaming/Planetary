@@ -39,6 +39,10 @@
             this.MoveButton = new System.Windows.Forms.Button();
             this.MoveCoordsInput = new System.Windows.Forms.TextBox();
             this.ToMenuButton = new System.Windows.Forms.Button();
+            this.MapText = new System.Windows.Forms.Label();
+            this.ShipText = new System.Windows.Forms.Label();
+            this.ShipBox.SuspendLayout();
+            this.MapBox.SuspendLayout();
             this.InfoBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,6 +84,7 @@
             // 
             // ShipBox
             // 
+            this.ShipBox.Controls.Add(this.ShipText);
             this.ShipBox.Location = new System.Drawing.Point(336, 12);
             this.ShipBox.Name = "ShipBox";
             this.ShipBox.Size = new System.Drawing.Size(284, 400);
@@ -89,6 +94,7 @@
             // 
             // MapBox
             // 
+            this.MapBox.Controls.Add(this.MapText);
             this.MapBox.Location = new System.Drawing.Point(12, 12);
             this.MapBox.Name = "MapBox";
             this.MapBox.Size = new System.Drawing.Size(318, 236);
@@ -141,6 +147,24 @@
             this.ToMenuButton.UseVisualStyleBackColor = true;
             this.ToMenuButton.Click += new System.EventHandler(this.ToMenuButton_Click);
             // 
+            // MapText
+            // 
+            this.MapText.AutoSize = true;
+            this.MapText.Location = new System.Drawing.Point(6, 16);
+            this.MapText.Name = "MapText";
+            this.MapText.Size = new System.Drawing.Size(78, 13);
+            this.MapText.TabIndex = 1;
+            this.MapText.Text = "Map goes here";
+            // 
+            // ShipText
+            // 
+            this.ShipText.AutoSize = true;
+            this.ShipText.Location = new System.Drawing.Point(6, 16);
+            this.ShipText.Name = "ShipText";
+            this.ShipText.Size = new System.Drawing.Size(98, 13);
+            this.ShipText.TabIndex = 2;
+            this.ShipText.Text = "Ship info goes here";
+            // 
             // PlanetaryGameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -158,6 +182,10 @@
             this.Controls.Add(this.MineButton);
             this.Name = "PlanetaryGameForm";
             this.Text = "Planetary";
+            this.ShipBox.ResumeLayout(false);
+            this.ShipBox.PerformLayout();
+            this.MapBox.ResumeLayout(false);
+            this.MapBox.PerformLayout();
             this.InfoBox.ResumeLayout(false);
             this.InfoBox.PerformLayout();
             this.ResumeLayout(false);
@@ -178,6 +206,8 @@
         protected System.Windows.Forms.Button TalkButton;
         private System.Windows.Forms.Label InfoText;
         private System.Windows.Forms.Button ToMenuButton;
+        private System.Windows.Forms.Label ShipText;
+        private System.Windows.Forms.Label MapText;
     }
 }
 
