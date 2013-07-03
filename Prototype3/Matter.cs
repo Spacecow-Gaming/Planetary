@@ -1,39 +1,41 @@
 ﻿using System;
 
-namespace Planetary
+/// <summary>
+/// Generic matter base class
+/// </summary>
+class Matter
 {
-    /// <summary>
-    /// Generic matter class
-    /// </summary>
-    class Matter
-    {
-        public Matter()
-        {
-            
-        }
-    }
 
-    /// <summary>
-    /// Ship which can be AI run or player run
-    /// </summary>
-    class Ship : Matter
-    {
+}
 
-    }
+/// <summary>
+/// Generic ship base class, controlled by no-one
+/// </summary>
+class Ship : Matter
+{
 
-    /// <summary>
-    /// What the player controls
-    /// </summary>
-    class Player : Ship
-    {
+}
 
-    }
+/// <summary>
+/// The player flies this around and has fun
+/// </summary>
+class Player : Ship
+{
 
-    /// <summary>
-    /// Scenic locations for players to visit
-    /// </summary>
-    class Planet : Matter
-    {
+}
 
-    }
+/// <summary>
+/// Robots powered by magic use these
+/// </summary>
+class AIShip : Ship
+{
+
+}
+
+/// <summary>
+/// Scenic destinations for players to visit
+/// </summary>
+class Planet : Matter
+{
+
 }
