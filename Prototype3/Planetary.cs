@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
-namespace Prototype3
+namespace Planetary
 {
-    static class Planetary
+    class Planetary
     {
         /// <summary>
         /// The main entry point for the application.
@@ -14,9 +14,17 @@ namespace Prototype3
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PlanetaryForm());
+            Planetary Game = new Planetary();
+            Game.MainMenu();
+        }
+
+        /// <summary>
+        /// Displays main menu, starting game when startgame button is pressed
+        /// </summary>
+        private void MainMenu()
+        {
+            PlanetaryMenuForm MenuForm = new PlanetaryMenuForm();
+            MenuForm.ShowDialog();
         }
     }
 }
