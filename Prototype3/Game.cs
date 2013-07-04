@@ -30,49 +30,114 @@ namespace Planetary
         /// </summary>
         private void MainMenu()
         {
-            RenderWindow MenuWindow = 
+            RenderWindow WMenu =
                 new RenderWindow(new VideoMode(640, 480), "Planetary");
-            MenuWindow.SetVisible(true);
-            MenuWindow.Closed += 
-                delegate(Object o, EventArgs e) { MenuWindow.Close(); };
+            WMenu.SetVisible(true);
 
             // These are the buttons
-            Texture ExitT = new Texture("Media/exit.png");
-            Sprite ExitS = new Sprite(ExitT);
-            Texture StartT = new Texture("Media/start.png");
-            Sprite StartS = new Sprite(StartT);
+            Texture TExit = new Texture("Media/exit.png");
+            Sprite SExit = new Sprite(TExit);
+            Texture TStart = new Texture("Media/start.png");
+            Sprite SStart = new Sprite(TStart);
 
             // These are the nice-looking things which aren't strictly
             // necessary
-            Texture TitleT = new Texture("Media/title.png");
-            Sprite TitleS = new Sprite(TitleT);
-            Texture BackgroundT = new Texture("Media/menuback.png");
-            Sprite BackgroundS = new Sprite(BackgroundT);
+            Texture TTitle = new Texture("Media/title.png");
+            Sprite STitle = new Sprite(TTitle);
+            Texture TBackground = new Texture("Media/menuback.png");
+            Sprite SBackground = new Sprite(TBackground);
 
-            while (MenuWindow.IsOpen())
+            // This is the actual button i.e. handles the clicks
+            Button BExit = new Button(SExit, WMenu);
+            Button BStart = new Button(SStart, WMenu);
+
+            // Guess what happens when you close the window? It CLOSES!
+            WMenu.Closed +=
+                delegate(Object o, EventArgs e) { WMenu.Close(); };
+
+            BExit.Click +=
+                delegate(Object o, EventArgs e) { WMenu.Close(); };
+
+            BStart.Click +=
+                delegate(Object o, EventArgs e) { StartGame(WMenu); };
+
+
+            while (WMenu.IsOpen())
             {
-                MenuWindow.DispatchEvents();
-                BackgroundS.Position = new Vector2f(0, 0);
-                TitleS.Position = new Vector2f(224, 0);
-                StartS.Position = new Vector2f(288, 200);
-                ExitS.Position = new Vector2f(288, 240);
-                MenuWindow.Draw(BackgroundS);
-                MenuWindow.Draw(TitleS);
-                MenuWindow.Draw(StartS);
-                MenuWindow.Draw(ExitS);
-                MenuWindow.Display();
+                // Handles input according to handlers set above
+                WMenu.DispatchEvents();
+
+                // Magic numbers? YES. Fuck the police.
+                SBackground.Position = new Vector2f(0, 0);
+                STitle.Position = new Vector2f(224, 0);
+                SStart.Position = new Vector2f(288, 200);
+                SExit.Position = new Vector2f(288, 240);
+
+                // Renders everything
+                WMenu.Draw(SBackground);
+                WMenu.Draw(STitle);
+                WMenu.Draw(SStart);
+                WMenu.Draw(SExit);
+                WMenu.Display();
             }
         }
 
         /// <summary>
         /// Draws game, associated UI components
         /// </summary>
-        private void StartGame()
+        private void StartGame(Window WMenu)
         {
+            WMenu.SetVisible(false);
+            RenderWindow WGame = new RenderWindow(new VideoMode(640, 480), "Planetary");
+            WGame.Position = WMenu.Position;
+            WGame.Closed +=
+                delegate(Object o, EventArgs e)
+                { WMenu.Position = WGame.Position; WMenu.SetVisible(true); WGame.Close(); };
+
+            while (WGame.IsOpen())
+            {
+                WGame.DispatchEvents();
+            }
+
 
         }
     }
 
+    /// <summary>
+    /// Click it, fires click event. Simple stuff.
+    /// </summary>
+    class Button
+    {
+        private Sprite MySprite;
+        public event EventHandler Click;
+
+        /// <summary>
+        /// Adds event to window to call OnClick
+        /// </summary>
+        /// <param name="InSprite"></param>
+        /// <param name="InWindow"></param>
+        public Button(Sprite InSprite, Window InWindow)
+        {
+            MySprite = InSprite;
+            InWindow.MouseButtonPressed +=
+                new EventHandler<MouseButtonEventArgs>(OnClick);
+        }
+        private void OnClick(object sender, MouseButtonEventArgs e)
+        {
+            switch (e.Button)
+            {
+                case Mouse.Button.Left:
+                    if (MySprite.GetGlobalBounds().Contains(e.X, e.Y))
+                    {
+                        Click(sender, e);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
     /// <summary>
     /// Contains some sectors and other data
     /// </summary>
