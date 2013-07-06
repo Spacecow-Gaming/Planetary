@@ -74,6 +74,7 @@ namespace Planetary
                 SExit.Position = new Vector2f(288, 240);
 
                 // Renders everything
+                WMenu.Clear(Color.Magenta);
                 WMenu.Draw(SBackground);
                 WMenu.Draw(STitle);
                 WMenu.Draw(SStart);
@@ -87,24 +88,29 @@ namespace Planetary
         /// </summary>
         private void StartGame(Window WMenu)
         {
-            WMenu.SetVisible(false);
             RenderWindow WGame = new RenderWindow(new VideoMode(640, 480), "Planetary");
             WGame.Position = WMenu.Position;
+            WMenu.SetVisible(false);
             WGame.Closed +=
                 delegate(Object o, EventArgs e)
                 { WMenu.Position = WGame.Position; WMenu.SetVisible(true); WGame.Close(); };
 
             while (WGame.IsOpen())
             {
+                // Process events
                 WGame.DispatchEvents();
+
+                // Updates world
+
+                // Renders everything
+                WGame.Clear(Color.Magenta);
+                WGame.Display();
             }
-
-
         }
     }
 
     /// <summary>
-    /// Click it, fires click event. Simple stuff.
+    /// Click it, fires click event.
     /// </summary>
     class Button
     {
@@ -112,7 +118,7 @@ namespace Planetary
         public event EventHandler Click;
 
         /// <summary>
-        /// Adds event to window to call OnClick
+        /// Adds handler to parent window to call OnClick
         /// </summary>
         /// <param name="InSprite"></param>
         /// <param name="InWindow"></param>
@@ -132,7 +138,6 @@ namespace Planetary
                         Click(sender, e);
                     }
                     break;
-
                 default:
                     break;
             }
