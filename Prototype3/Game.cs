@@ -88,6 +88,11 @@ namespace Planetary
         /// </summary>
         private void StartGame(Window WMenu)
         {
+            // The Texture and Sprite for the background
+            Texture board = new Texture("Media/board1.png");
+            Sprite gameBoard = new Sprite(board);
+
+            // Creates the window and gives it certain properties
             RenderWindow WGame = new RenderWindow(new VideoMode(640, 480), "Planetary");
             WGame.Position = WMenu.Position;
             WMenu.SetVisible(false);
@@ -104,6 +109,7 @@ namespace Planetary
 
                 // Renders everything
                 WGame.Clear(Color.Magenta);
+                WGame.Draw(gameBoard);
                 WGame.Display();
             }
         }
