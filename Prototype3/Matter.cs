@@ -1,4 +1,7 @@
 ﻿using System;
+using SFML.Window;
+using SFML.Graphics;
+using SFML.Audio;
 
 /// <summary>
 /// Generic matter base class
@@ -21,7 +24,10 @@ class Ship : Matter
 /// </summary>
 class Player : Ship
 {
+    static Texture TPlayer = new Texture("Media/ship.png");
+    public Sprite SPlayer = new Sprite(TPlayer);
 
+    
 }
 
 /// <summary>
