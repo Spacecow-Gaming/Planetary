@@ -126,8 +126,8 @@ namespace Planetary
         /// <summary>
         /// Adds handler to parent window to call OnClick
         /// </summary>
-        /// <param name="InSprite"></param>
-        /// <param name="InWindow"></param>
+        /// <param name="InSprite">Sprite representing button</param>
+        /// <param name="InWindow">Parent window</param>
         public Button(Sprite InSprite, Window InWindow)
         {
             MySprite = InSprite;
@@ -149,19 +149,5 @@ namespace Planetary
             }
         }
     }
-    /// <summary>
-    /// Contains some sectors and other data
-    /// </summary>
-    class Board
-    {
-
-    }
-
-    /// <summary>
-    /// Contains lists of objects, data about sector
-    /// </summary>
-    class Sector
-    {
-
-    }
+    
 }
