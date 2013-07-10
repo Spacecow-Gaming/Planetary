@@ -89,14 +89,12 @@ namespace Planetary
         private void StartGame(Window WMenu)
         {
             // Creates a new instance of the player
-            var player = new Player();
-            
-            // The Texture and Sprite for the background
-            Texture TBoard = new Texture("Media/board1.png");
-            Sprite SBoard = new Sprite(TBoard);
+            var Player1 = new Player("Media/ship.png");
+
+            Board GameBoard = new Board("Media/board1.png");
 
             // Sets the position of the player's ship when it starts... magic numbers...
-            player.SPlayer.Position = new Vector2f(270, 440);
+            Player1.SPlayer.Position = new Vector2f(270, 440);
 
             
 
@@ -120,8 +118,8 @@ namespace Planetary
 
                 // Renders everything
                 WGame.Clear(Color.Magenta);
-                WGame.Draw(SBoard);
-                WGame.Draw(player.SPlayer);
+                WGame.Draw(GameBoard.SBoard);
+                WGame.Draw(Player1.SPlayer);
                 WGame.Display();
             }
         }

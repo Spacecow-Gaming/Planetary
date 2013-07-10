@@ -24,10 +24,13 @@ class Ship : Matter
 /// </summary>
 class Player : Ship
 {
-    static Texture TPlayer = new Texture("Media/ship.png");
-    public Sprite SPlayer = new Sprite(TPlayer);
+    public Sprite SPlayer { get; set; }
 
-    
+    public Player(string ImgPath)
+    {
+        Texture TPlayer = new Texture(ImgPath);
+        SPlayer = new Sprite(TPlayer);
+    }
 }
 
 /// <summary>
