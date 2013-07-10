@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Board.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Matter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
