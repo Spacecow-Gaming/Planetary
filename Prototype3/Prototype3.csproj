@@ -100,6 +100,9 @@
     <Content Include="Media\menuback.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Media\ship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Media\start.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
