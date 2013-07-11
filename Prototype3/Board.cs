@@ -14,7 +14,7 @@ class Sector
 /// </summary>
 class Board
 {
-    public Sprite SBoard { get; set; }
+    public Sprite sprite { get; set; }
 
     /// <summary>
     /// Initiates board sprite, texture, sectors
@@ -22,8 +22,8 @@ class Board
     /// <param name="ImgPath"></param>
     public Board(string ImgPath)
     {
-        Texture TBoard = new Texture(ImgPath);
-        SBoard = new Sprite(TBoard);
+        Texture texture = new Texture(ImgPath);
+        sprite = new Sprite(texture);
     }
 }
 

@@ -24,12 +24,12 @@ class Ship : Matter
 /// </summary>
 class Player : Ship
 {
-    public Sprite SPlayer { get; set; }
+    public Sprite sprite { get; set; }
 
     public Player(string ImgPath)
     {
-        Texture TPlayer = new Texture(ImgPath);
-        SPlayer = new Sprite(TPlayer);
+        Texture texture = new Texture(ImgPath);
+        sprite = new Sprite(texture);
     }
 }
 
