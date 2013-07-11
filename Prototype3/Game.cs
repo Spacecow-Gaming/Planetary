@@ -94,7 +94,7 @@ namespace Planetary
             Board GameBoard = new Board("Media/board1.png");
 
             // Sets the position of the player's ship when it starts... magic numbers...
-            Player1.SPlayer.Position = new Vector2f(270, 440);
+            Player1.sprite.Position = new Vector2f(270, 440);
 
             
 
@@ -118,8 +118,8 @@ namespace Planetary
 
                 // Renders everything
                 WGame.Clear(Color.Magenta);
-                WGame.Draw(GameBoard.SBoard);
-                WGame.Draw(Player1.SPlayer);
+                WGame.Draw(GameBoard.sprite);
+                WGame.Draw(Player1.sprite);
                 WGame.Display();
             }
         }
@@ -130,7 +130,7 @@ namespace Planetary
     /// </summary>
     class Button
     {
-        private Sprite MySprite;
+        private Sprite sprite;
         public event EventHandler Click;
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Planetary
         /// <param name="InWindow">Parent window</param>
         public Button(Sprite InSprite, Window InWindow)
         {
-            MySprite = InSprite;
+            sprite = InSprite;
             InWindow.MouseButtonPressed +=
                 new EventHandler<MouseButtonEventArgs>(OnClick);
         }
@@ -149,7 +149,7 @@ namespace Planetary
             switch (e.Button)
             {
                 case Mouse.Button.Left:
-                    if (MySprite.GetGlobalBounds().Contains(e.X, e.Y))
+                    if (sprite.GetGlobalBounds().Contains(e.X, e.Y))
                     {
                         Click(sender, e);
                     }
