@@ -80,6 +80,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Media\arial.ttf" />
+    <None Include="Media\arialbd.ttf" />
+    <None Include="Media\arialbi.ttf" />
+    <None Include="Media\ariali.ttf" />
+    <None Include="Media\ariblk.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="csfml-audio-2.dll">
