@@ -88,18 +88,26 @@ namespace Planetary
         /// </summary>
         private void StartGame(Window WMenu)
         {
-            // Creates a new instance of the player
-            var Player1 = new Player("Media/ship.png");
 
-            Board GameBoard = new Board("Media/board1.png");
+            // Creates a new 2d Camera (used for rotation and much much more)
+
+            Vector2f centre = new Vector2f(250, 250);
+            Vector2f size = new Vector2f(500, -500);
+
+            View view = new View(centre, size);
+
+            // Creates a new instance of the player
+            Player Player1 = new Player("Media/ship.png");
+
+            // Creates a new instance of the board
+            Board GameBoard = new Board("Media/boardTest.png");
 
             // Sets the position of the player's ship when it starts... magic numbers...
-            Player1.sprite.Position = new Vector2f(270, 440);
-
-            
+            Player1.sprite.Position = new Vector2f(300, 50);
+            Player1.sprite.Rotation = 180;
 
             // Creates the window and gives it certain properties
-            RenderWindow WGame = new RenderWindow(new VideoMode(640, 480), "Planetary");
+            RenderWindow WGame = new RenderWindow(new VideoMode(500, 500), "Planetary");
             WGame.Position = WMenu.Position;
             WMenu.SetVisible(false);
             WGame.Closed += delegate(Object o, EventArgs e)
@@ -111,16 +119,25 @@ namespace Planetary
 
             while (WGame.IsOpen())
             {
+                var origin = new Vector2f(500, 500);
+                GameBoard.sprite.Origin = origin;
+
+                WGame.SetView(view);
+
                 // Process events
                 WGame.DispatchEvents();
 
                 // Updates world
 
                 // Renders everything
-                WGame.Clear(Color.Magenta);
                 WGame.Draw(GameBoard.sprite);
                 WGame.Draw(Player1.sprite);
                 WGame.Display();
+
+                if (Mouse.IsButtonPressed(Mouse.Button.Left))
+                {
+                    GameBoard.sprite.Rotation = GameBoard.sprite.Rotation - 15;
+                }
             }
         }
     }
