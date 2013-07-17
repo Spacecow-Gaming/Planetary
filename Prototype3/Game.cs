@@ -1,6 +1,7 @@
 ﻿using System;
 using SFML.Window;
 using SFML.Graphics;
+using System.Timers;
 
 namespace Planetary
 {
@@ -9,6 +10,9 @@ namespace Planetary
     /// </summary>
     class PlanetaryGame
     {
+
+        int timeLeft = 60;
+
         /// <summary>
         /// The entry point of the program
         /// </summary>
@@ -86,11 +90,11 @@ namespace Planetary
         /// <summary>
         /// Draws game, associated UI components
         /// </summary>
+        /// 
         private void StartGame(Window WMenu)
         {
 
             // Creates a new 2d Camera (used for rotation and much much more)
-
             Vector2f centre = new Vector2f(250, 250);
             Vector2f size = new Vector2f(500, -500);
 
@@ -112,13 +116,29 @@ namespace Planetary
             WMenu.SetVisible(false);
             WGame.Closed += delegate(Object o, EventArgs e)
                 {
-                    WMenu.Position = WGame.Position; 
-                    WMenu.SetVisible(true); 
-                    WGame.Close(); 
+                    WMenu.Position = WGame.Position;
+                    WMenu.SetVisible(true);
+                    WGame.Close();
                 };
 
             while (WGame.IsOpen())
             {
+                Timer timer = new Timer();
+                timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+                timer.Interval = 1000;
+                timer.Enabled = true;
+                timer.Start();
+
+                Vector2f textPos = new Vector2f(400, 400);
+                Font font = new Font("Media/Arial.ttf");
+                Text text = new Text();
+                text.Font = font;
+                text.DisplayedString = timeLeft.ToString();
+                text.CharacterSize = 35;
+                text.Color = (Color.Yellow);
+                text.Position = textPos;
+                text.Rotation = 180;
+
                 var origin = new Vector2f(500, 500);
                 GameBoard.sprite.Origin = origin;
 
@@ -132,6 +152,7 @@ namespace Planetary
                 // Renders everything
                 WGame.Draw(GameBoard.sprite);
                 WGame.Draw(Player1.sprite);
+                WGame.Draw(text);
                 WGame.Display();
 
                 if (Mouse.IsButtonPressed(Mouse.Button.Left))
@@ -139,6 +160,11 @@ namespace Planetary
                     GameBoard.sprite.Rotation = GameBoard.sprite.Rotation - 15;
                 }
             }
+        }
+
+        private void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            timeLeft = timeLeft - 1;
         }
     }
 
@@ -176,5 +202,5 @@ namespace Planetary
             }
         }
     }
-    
+
 }
