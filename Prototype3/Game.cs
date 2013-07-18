@@ -10,9 +10,6 @@ namespace Planetary
     /// </summary>
     class PlanetaryGame
     {
-
-        int timeLeft = 60;
-
         /// <summary>
         /// The entry point of the program
         /// </summary>
@@ -123,22 +120,6 @@ namespace Planetary
 
             while (WGame.IsOpen())
             {
-                Timer timer = new Timer();
-                timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-                timer.Interval = 1000;
-                timer.Enabled = true;
-                timer.Start();
-
-                Vector2f textPos = new Vector2f(400, 400);
-                Font font = new Font("Media/Arial.ttf");
-                Text text = new Text();
-                text.Font = font;
-                text.DisplayedString = timeLeft.ToString();
-                text.CharacterSize = 35;
-                text.Color = (Color.Yellow);
-                text.Position = textPos;
-                text.Rotation = 180;
-
                 var origin = new Vector2f(500, 500);
                 GameBoard.sprite.Origin = origin;
 
@@ -152,7 +133,6 @@ namespace Planetary
                 // Renders everything
                 WGame.Draw(GameBoard.sprite);
                 WGame.Draw(Player1.sprite);
-                WGame.Draw(text);
                 WGame.Display();
 
                 if (Mouse.IsButtonPressed(Mouse.Button.Left))
@@ -160,11 +140,6 @@ namespace Planetary
                     GameBoard.sprite.Rotation = GameBoard.sprite.Rotation - 15;
                 }
             }
-        }
-
-        private void OnTimedEvent(object sender, ElapsedEventArgs e)
-        {
-            timeLeft = timeLeft - 1;
         }
     }
 
