@@ -118,6 +118,9 @@ namespace Planetary
             // Creates a new instance of the board
             Board GameBoard = new Board("Media/boardTest.png");
 
+            // Creates a new planet
+            Planet NewPlanet = new Planet("Media/planet.png");
+
             // Creates the window and gives it certain properties
             RenderWindow WGame = new RenderWindow(new VideoMode(500, 500), "Planetary");
             WGame.Position = WMenu.Position;
@@ -140,6 +143,7 @@ namespace Planetary
                 // Renders everything
                 WGame.Draw(GameBoard.sprite);
                 WGame.Draw(Player1.sprite);
+                WGame.Draw(NewPlanet.sprite);
                 WGame.Display();
 
                 if (Mouse.IsButtonPressed(Mouse.Button.Left))
