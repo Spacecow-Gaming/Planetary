@@ -30,6 +30,10 @@ class Player : Ship
     {
         Texture texture = new Texture(ImgPath);
         sprite = new Sprite(texture);
+
+        // Sets the position of the player's ship when it starts... magic numbers...
+        sprite.Position = new Vector2f(300, 50);
+        sprite.Rotation = 180;
     }
 }
 
