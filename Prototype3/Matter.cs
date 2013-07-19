@@ -50,5 +50,23 @@ class AIShip : Ship
 /// </summary>
 class Planet : Matter
 {
+    
+    public Sprite sprite { get; set; }
+   
+    
 
+    public Planet(string imgPath)
+    {
+        Random random = new Random();
+        int planetX = random.Next();
+        int planetY = random.Next();
+
+        Vector2f planetPosition = new Vector2f(planetX, planetY);
+
+        Texture texture = new Texture(imgPath);
+        sprite = new Sprite(texture);
+
+        //sprite.Position = planetPosition;
+        sprite.Position = new Vector2f(430, 430);
+    }
 }
