@@ -20,10 +20,6 @@ class Matter
 
         Texture texture = new Texture(ImgPath);
         sprite = new Sprite(texture);
-
-        // Sets the position of the player's ship when it starts... magic numbers...
-        sprite.Position = new Vector2f(300, 50);
-        sprite.Rotation = 180;
     }
 }
 
@@ -47,6 +43,9 @@ class Player : Ship
     public Player(string ImgPath)
         : base(ImgPath)
     {
+        // Sets the position of the player's ship when it starts... magic numbers...
+        sprite.Position = new Vector2f(300, 50);
+        sprite.Rotation = 180;
 
     }
 
@@ -75,7 +74,6 @@ class Planet : Matter
         : base(ImgPath)
     {
         // TODO: Put planet on board according to position var
-
         sprite.Position = new Vector2f(430, 430);
     }
 }
