@@ -122,7 +122,7 @@ namespace Planetary
             Planet NewPlanet = new Planet("Media/planet.png");
 
             // Creates the window and gives it certain properties
-            RenderWindow WGame = new RenderWindow(new VideoMode(500, 500), "Planetary");
+            RenderWindow WGame = new RenderWindow(new VideoMode(640, 480), "Planetary");
             WGame.Position = WMenu.Position;
             WMenu.SetVisible(false);
             WGame.Closed += delegate(Object o, EventArgs e)
@@ -139,6 +139,8 @@ namespace Planetary
                 WGame.DispatchEvents();
 
                 // Updates world
+                if (Mouse.IsButtonPressed(Mouse.Button.Left))
+                    rotateBoard(GameBoard);
 
                 // Renders everything
                 WGame.Draw(GameBoard.sprite);
@@ -146,10 +148,6 @@ namespace Planetary
                 WGame.Draw(NewPlanet.sprite);
                 WGame.Display();
 
-                if (Mouse.IsButtonPressed(Mouse.Button.Left))
-                {
-                    rotateBoard(GameBoard);
-                }
             }
         }
     }
@@ -177,6 +175,7 @@ namespace Planetary
         {
             switch (e.Button)
             {
+                // There will be more cases, don't turn this into an if
                 case Mouse.Button.Left:
                     if (sprite.GetGlobalBounds().Contains(e.X, e.Y))
                     {

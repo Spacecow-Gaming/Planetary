@@ -24,9 +24,7 @@ class Board
     {
         Texture texture = new Texture(ImgPath);
         sprite = new Sprite(texture);
-
-        var origin = new Vector2f(500, 500);
-        sprite.Origin = origin;
+        sprite.Origin = new Vector2f(500, 500);
     }
 }
 
