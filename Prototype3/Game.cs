@@ -84,19 +84,6 @@ namespace Planetary
             }
         }
 
-        /// <summary>
-        ///  This returns a view with specified centre and size
-        /// </summary>
-        /// <returns>A view...</returns>
-        private View getView()
-        {
-            Vector2f centre = new Vector2f(250, 250);
-            Vector2f size = new Vector2f(500, -500);
-
-            View view = new View(centre, size);
-            return view;
-        }
-
         private void rotateBoard(Board thingToRotate)
         {
             thingToRotate.sprite.Rotation = thingToRotate.sprite.Rotation - 15;
@@ -109,8 +96,10 @@ namespace Planetary
         private void StartGame(Window WMenu)
         {
 
-            // Creates a new view
-            View view = getView();
+            // This is only done once, there is no need to make a method for it
+            View view = new View
+                           (new Vector2f(250, 250),      // Centre of the view
+                            new Vector2f (640, -480));  // Size of the view
 
             // Creates a new instance of the player
             Player Player1 = new Player("Media/ship.png");
