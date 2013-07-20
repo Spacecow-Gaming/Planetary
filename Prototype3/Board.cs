@@ -15,6 +15,7 @@ class Sector
 class Board
 {
     public Sprite sprite { get; set; }
+    public int SectorCount;
 
     /// <summary>
     /// Initiates board sprite, texture, sectors
@@ -25,6 +26,9 @@ class Board
         Texture texture = new Texture(ImgPath);
         sprite = new Sprite(texture);
         sprite.Origin = new Vector2f(500, 500);
+
+        // TODO: Make this depend on number of players, or something
+        SectorCount = 16;
     }
 }
 
