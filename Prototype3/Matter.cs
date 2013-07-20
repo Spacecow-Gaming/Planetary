@@ -8,26 +8,16 @@ using SFML.Audio;
 /// </summary>
 class Matter
 {
-
-}
-
-/// <summary>
-/// Generic ship base class, controlled by no-one
-/// </summary>
-class Ship : Matter
-{
-
-}
-
-/// <summary>
-/// The player flies this around and has fun
-/// </summary>
-class Player : Ship
-{
     public Sprite sprite { get; set; }
 
-    public Player(string ImgPath)
+    // This represents the number of the square the object is on, on the board
+    public int position { get; set; }
+
+    public Matter(string ImgPath)
     {
+        Random random = new Random();
+        position = random.Next(0, 15);
+
         Texture texture = new Texture(ImgPath);
         sprite = new Sprite(texture);
 
@@ -38,10 +28,41 @@ class Player : Ship
 }
 
 /// <summary>
+/// Generic ship base class, controlled by no-one
+/// </summary>
+class Ship : Matter
+{
+    public Ship(string ImgPath)
+        : base(ImgPath)
+    {
+
+    }
+}
+
+/// <summary>
+/// The player flies this around and has fun
+/// </summary>
+class Player : Ship
+{
+    public Player(string ImgPath)
+        : base(ImgPath)
+    {
+
+    }
+
+
+}
+
+/// <summary>
 /// Robots powered by magic use these
 /// </summary>
 class AIShip : Ship
 {
+    public AIShip(string ImgPath)
+        : base(ImgPath)
+    {
+
+    }
 
 }
 
@@ -50,20 +71,11 @@ class AIShip : Ship
 /// </summary>
 class Planet : Matter
 {
-    public Sprite sprite { get; set; }
-
-    // This represents the number of the square the planet is on, on the board
-    public int position { get; set; }
-
-    public Planet(string imgPath)
+    public Planet(string ImgPath)
+        : base(ImgPath)
     {
-        Random random = new Random();
-        position = random.Next(0, 15);
+        // TODO: Put planet on board according to position var
 
-        Texture texture = new Texture(imgPath);
-        sprite = new Sprite(texture);
-
-        //sprite.Position = planetPosition;
         sprite.Position = new Vector2f(430, 430);
     }
 }
