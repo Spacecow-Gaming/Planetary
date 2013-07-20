@@ -44,7 +44,7 @@ class Player : Ship
         : base(ImgPath)
     {
         // Sets the position of the player's ship when it starts... magic numbers...
-        sprite.Position = new Vector2f(300, 50);
+        sprite.Position = new Vector2f(315, 55);
         sprite.Rotation = 180;
 
     }
