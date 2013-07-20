@@ -72,11 +72,11 @@ class Game
 }
 
 /// <summary>
-/// Click it, fires click event.
+/// Interactive image. You can mouse over it, click on it etc.
 /// </summary>
-class Button
+class AdvImage
 {
-    private Sprite sprite;
+    public Sprite sprite { get; set; }
     public event EventHandler Click;
 
     /// <summary>
@@ -84,9 +84,10 @@ class Button
     /// </summary>
     /// <param name="InSprite">Sprite representing button</param>
     /// <param name="InWindow">Parent window</param>
-    public Button(Sprite InSprite, Window InWindow)
+    public AdvImage(string ImgPath, Window InWindow)
     {
-        sprite = InSprite;
+        Texture texture = new Texture(ImgPath);
+        sprite = new Sprite(texture);
         InWindow.MouseButtonPressed +=
             new EventHandler<MouseButtonEventArgs>(OnClick);
     }
