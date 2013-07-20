@@ -84,11 +84,6 @@ namespace Planetary
             }
         }
 
-        private void rotateBoard(Board thingToRotate)
-        {
-            thingToRotate.sprite.Rotation = thingToRotate.sprite.Rotation - 15;
-        }
-
         /// <summary>
         /// Draws game, associated UI components
         /// </summary>
@@ -101,11 +96,16 @@ namespace Planetary
                            (new Vector2f(250, 250),      // Centre of the view
                             new Vector2f (640, -480));  // Size of the view
 
+            // The ever-present background
+            Texture TBackground = new Texture("Media/menuback.png");
+            Sprite SBackground = new Sprite(TBackground);
+            
+
             // Creates a new instance of the player
             Player Player1 = new Player("Media/ship.png");
 
             // Creates a new instance of the board
-            Board GameBoard = new Board("Media/boardTest.png");
+            Board GameBoard = new Board("Media/board.png");
 
             // Creates a new planet
             Planet NewPlanet = new Planet("Media/planet.png");
@@ -120,6 +120,16 @@ namespace Planetary
                     WMenu.SetVisible(true);
                     WGame.Close();
                 };
+
+            // Sets board to rotate when mouse is released
+            // This avoids constant spinning if button is held down
+            WGame.MouseButtonReleased += delegate(Object o, MouseButtonEventArgs e)
+                {
+                    if (e.Button == Mouse.Button.Left)
+                        // The size of the rotation scales with the sector count
+                        // This means the board looks correct
+                        GameBoard.sprite.Rotation -= 360/(float)GameBoard.SectorCount;
+                };
             WGame.SetView(view);
 
             while (WGame.IsOpen())
@@ -127,11 +137,8 @@ namespace Planetary
                 // Process events
                 WGame.DispatchEvents();
 
-                // Updates world
-                if (Mouse.IsButtonPressed(Mouse.Button.Left))
-                    rotateBoard(GameBoard);
-
                 // Renders everything
+                WGame.Draw(SBackground);
                 WGame.Draw(GameBoard.sprite);
                 WGame.Draw(Player1.sprite);
                 WGame.Draw(NewPlanet.sprite);
