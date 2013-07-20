@@ -50,18 +50,15 @@ class AIShip : Ship
 /// </summary>
 class Planet : Matter
 {
-    
     public Sprite sprite { get; set; }
-   
-    
+
+    // This represents the number of the square the planet is on, on the board
+    public int position { get; set; }
 
     public Planet(string imgPath)
     {
         Random random = new Random();
-        int planetX = random.Next();
-        int planetY = random.Next();
-
-        Vector2f planetPosition = new Vector2f(planetX, planetY);
+        position = random.Next(0, 15);
 
         Texture texture = new Texture(imgPath);
         sprite = new Sprite(texture);
