@@ -13,10 +13,8 @@ class Game
     /// </summary>
     public void Start(Window WMenu)
     {
-
-        // This is only done once, there is no need to make a method for it
         View view = new View
-                       (new Vector2f(250, 250),      // Centre of the view
+                       (new Vector2f(250, 250),    // Centre of the view
                         new Vector2f(640, -480));  // Size of the view
 
         // The ever-present background
